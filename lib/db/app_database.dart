@@ -5,30 +5,30 @@ import 'package:sqflite/sqflite.dart';
 
 class AppDatabase {
   AppDatabase._internal();
-  static final AppDatabase appDatabase = AppDatabase._internal();
+  static final AppDatabase _appDatabase = AppDatabase._internal();
 
-  Database? database;
-  bool initialized = false;
+  Database? _database;
+  bool _initialized = false;
   static const dbName = 'data.db';
 
   Future<Database> get connection async {
-    if (database == null || !initialized) {
+    if (_database == null || !_initialized) {
       await _initialize();
     }
-    return database!;
+    return _database!;
   }
 
   factory AppDatabase() {
-    return appDatabase;
+    return _appDatabase;
   }
 
   Future _initialize() async {
     var directory = await getApplicationDocumentsDirectory();
     var path = join(directory.path, dbName);
-    database = await openDatabase(
+    _database = await openDatabase(
       path,
       version: 1,
     );
-    initialized = true;
+    _initialized = true;
   }
 }
