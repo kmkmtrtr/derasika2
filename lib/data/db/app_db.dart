@@ -60,7 +60,7 @@ class AppDB {
 
   Future _updateMaster(File appDB) async {
     const masterVersionName = 'masterupdatedat.json';
-    final List<Map<String, dynamic>> masterJsonVersions =
+    final List<dynamic> masterJsonVersions =
         await _fetchJson(masterVersionName);
     final db = await openDatabase(appDB.path);
     final localVersions = await db.rawQuery(

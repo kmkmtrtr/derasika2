@@ -1,45 +1,53 @@
+import 'package:derasika2/data/model/score_data.dart';
+import 'package:derasika2/ui/pages/home/home_view_model.dart';
+import 'package:derasika2/ui/pages/home/score_tile.dart';
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class HomePage extends HookConsumerWidget {
+  HomePage({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final myScrollController = ScrollController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeViewModel = ref.read(homeViewModelProvider);
+    final snapshot = useFuture(useMemoized(homeViewModel.fetchScores));
+    final scoreList = List<ScoreData>.from(
+        homeViewModel.scores.where((e) => e.modeType == 1));
     return Scaffold(
       appBar: AppBar(
-        title: const Text('title'),
+        key: _scaffoldKey,
+        title: const Text('スコア一覧'),
+        // actions: <Widget>[
+        // CsvDownloadButton(model),
+        // SortButton(model),
+        // SearchButton(scoreDataListModel),
+        // ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+        child: snapshot.hasData
+            ? DraggableScrollbar.semicircle(
+                controller: myScrollController,
+                child: ListView.builder(
+                  controller: myScrollController,
+                  scrollDirection: Axis.vertical,
+                  itemCount: scoreList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ScoreTile(record: scoreList[index]);
+                  },
+                ),
+              )
+            : const Text('loading...'),
       ),
+      // drawer: HomeDrawer(),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () {
+          ref.watch(homeViewModelProvider).refreshScores();
+        },
+        child: const Icon(Icons.ac_unit),
       ),
     );
   }
