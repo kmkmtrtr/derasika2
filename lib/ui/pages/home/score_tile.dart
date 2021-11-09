@@ -40,9 +40,8 @@ class ScoreTile extends StatelessWidget {
             : record.misscountValue - record.bestMisscountValue >= 0
                 ? '歴代+${record.misscountValue - record.bestMisscountValue}'
                 : '歴代${record.misscountValue - record.bestMisscountValue}';
-    final titleRow = Container(
+    final titleRow = SizedBox(
       height: titleRowHeight,
-      decoration: const BoxDecoration(),
       child: FittedBox(
         child: Text(
           '${record.title}　',
@@ -133,9 +132,11 @@ class ScoreTile extends StatelessWidget {
                   const SizedBox(
                     height: rowHeight,
                     child: FittedBox(
-                      child: Text('MISS COUNT ',
-                          style: TextStyle(
-                              color: Colors.black87, fontSize: fontSize)),
+                      child: Text(
+                        'MISS COUNT ',
+                        style: TextStyle(
+                            color: Colors.black87, fontSize: fontSize),
+                      ),
                       fit: BoxFit.contain,
                     ),
                   ),
