@@ -2,28 +2,67 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:derasika2/db/app_database.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class MasterData {
-  final masterSiteUri = 'https://beatmania-score-manager.web.app/';
+final appDBProvider = Provider((_) => AppDB());
 
-  Future<Uint8List> fetchNewMasterDb() async {
-    final client = HttpClient();
-    final request =
-        await client.getUrl(Uri.parse(masterSiteUri + AppDatabase.dbName));
-    final response = await request.close();
-    client.close();
-    return await consolidateHttpClientResponseBytes(response);
+class AppDB {
+  AppDB._internal();
+  final _dbName = 'data.db';
+  final _masterSiteUri = 'https://beatmania-score-manager.web.app/';
+  bool _initialized = false;
+  Database? _database;
+
+  static final AppDB _appDatabase = AppDB._internal();
+
+  Future<Database> get connection async {
+    if (_database == null || !_initialized) {
+      await _initialize();
+    }
+    return _database!;
   }
 
-  Future updateMaster(File masterDb) async {
+  factory AppDB() {
+    return _appDatabase;
+  }
+
+  Future _initialize() async {
+    final directory = await getApplicationDocumentsDirectory();
+    final path = join(directory.path, _dbName);
+    final appDB = File(path);
+    if (!(await appDB.exists())) {
+      final bytes = await _fetchNewMasterDb();
+      await appDB.writeAsBytes(bytes);
+    }
+    await _updateMaster(appDB);
+    _database = await openDatabase(
+      path,
+      version: 1,
+    );
+    _initialized = true;
+  }
+
+  Future<Uint8List> _fetchNewMasterDb() async {
+    final client = HttpClient();
+    try {
+      final request =
+          await client.getUrl(Uri.parse(_masterSiteUri + 'iidxscore.db'));
+      final response = await request.close();
+      return await consolidateHttpClientResponseBytes(response);
+    } finally {
+      client.close();
+    }
+  }
+
+  Future _updateMaster(File appDB) async {
     const masterVersionName = 'masterupdatedat.json';
-    final List<Map<String, dynamic>> masterJsonVersions =
-        await fetchJson(masterVersionName);
-    // DBのマスターのバージョンとjsonのバージョンを比較し、更新する必要があるものを取得
-    final db = await openDatabase(masterDb.path);
+    final List<dynamic> masterJsonVersions =
+        await _fetchJson(masterVersionName);
+    final db = await openDatabase(appDB.path);
     final localVersions = await db.rawQuery(
         '''select title, version from master_updated_at order by rank''');
     await db.transaction((txn) async {
@@ -36,15 +75,11 @@ class MasterData {
         final record = records.first;
         if (DateTime.parse(record['version'])
             .isAfter(DateTime.parse(item['version'] as String))) {
-          // 更新するマスターをダウンロード
-          final masterJson = await fetchJson(record['fileName']);
+          final masterJson = await _fetchJson(record['fileName']);
           await txn.update(
               'master_updated_at', {'version': masterJson['version']},
               where: 'title = ?', whereArgs: [masterJson['title']]);
-          //マスターのjsonとトランザクションを渡したらやってくれるようにする
           updateTable(masterJson, txn);
-          //もしかして、新しいDBダウンロードしてきて
-          //データを移し替えたほうが早いんじゃない？？？
         }
       }
     });
@@ -230,9 +265,9 @@ class MasterData {
     }
   }
 
-  Future<dynamic> fetchJson(String fileName) async {
+  Future<dynamic> _fetchJson(String fileName) async {
     final client = HttpClient();
-    final request = await client.getUrl(Uri.parse(masterSiteUri + fileName));
+    final request = await client.getUrl(Uri.parse(_masterSiteUri + fileName));
     final response = await request.close();
     client.close();
     final responseBody = await response.transform(utf8.decoder).join();
