@@ -1,4 +1,5 @@
 import 'package:derasika2/data/model/score_data.dart';
+import 'package:derasika2/ui/component/loading_container.dart';
 import 'package:derasika2/ui/pages/home/home_view_model.dart';
 import 'package:derasika2/ui/pages/home/score_tile.dart';
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
@@ -28,27 +29,30 @@ class HomePage extends HookConsumerWidget {
         // ],
       ),
       body: Center(
-        child: snapshot.hasData
-            ? DraggableScrollbar.semicircle(
-                controller: myScrollController,
-                child: ListView.builder(
-                  controller: myScrollController,
-                  scrollDirection: Axis.vertical,
-                  itemCount: scoreList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ScoreTile(record: scoreList[index]);
-                  },
-                ),
-              )
-            : const Text('loading...'),
+        child: LoadingContainer(
+          isLoaded: snapshot.hasData,
+          child: DraggableScrollbar.semicircle(
+            controller: myScrollController,
+            child: ListView.builder(
+              controller: myScrollController,
+              scrollDirection: Axis.vertical,
+              itemCount: scoreList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ScoreTile(record: scoreList[index]);
+              },
+            ),
+          ),
+        ),
       ),
       // drawer: HomeDrawer(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          ref.watch(homeViewModelProvider).refreshScores();
-        },
-        child: const Icon(Icons.ac_unit),
-      ),
+      floatingActionButton: snapshot.hasData
+          ? FloatingActionButton(
+              onPressed: () async {
+                ref.watch(homeViewModelProvider).refreshScores();
+              },
+              child: const Icon(Icons.ac_unit),
+            )
+          : null,
     );
   }
 }
