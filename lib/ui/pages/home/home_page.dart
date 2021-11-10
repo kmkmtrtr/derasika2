@@ -15,7 +15,12 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final homeViewModel = ref.read(homeViewModelProvider);
-    final snapshot = useFuture(useMemoized(homeViewModel.fetchScores));
+    final snapshot = useFuture(useMemoized(homeViewModel.fetchScores, [
+      homeViewModel.version,
+      homeViewModel.where,
+      homeViewModel.whereArgs,
+      homeViewModel.orderBy
+    ]));
     final scoreList = List<ScoreData>.from(
         homeViewModel.scores.where((e) => e.modeType == 1));
     return Scaffold(
@@ -30,7 +35,7 @@ class HomePage extends HookConsumerWidget {
       ),
       body: Center(
         child: LoadingContainer(
-          isLoaded: snapshot.hasData,
+          isLoaded: snapshot.connectionState == ConnectionState.done,
           child: DraggableScrollbar.semicircle(
             controller: myScrollController,
             child: ListView.builder(
@@ -45,12 +50,12 @@ class HomePage extends HookConsumerWidget {
         ),
       ),
       // drawer: HomeDrawer(),
-      floatingActionButton: snapshot.hasData
+      floatingActionButton: snapshot.connectionState == ConnectionState.done
           ? FloatingActionButton(
               onPressed: () async {
-                ref.watch(homeViewModelProvider).refreshScores();
+                ref.watch(homeViewModelProvider).changeVersion();
               },
-              child: const Icon(Icons.ac_unit),
+              child: const Icon(Icons.change_circle_outlined),
             )
           : null,
     );

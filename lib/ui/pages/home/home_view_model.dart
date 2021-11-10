@@ -12,21 +12,24 @@ class HomeViewModel extends ChangeNotifier {
   final Reader _reader;
 
   late final ScoreRepository _repository = _reader(scoreRepositoryProvider);
+  int version = 29;
 
   List<ScoreData>? _scores;
   List<ScoreData> get scores => _scores ?? <ScoreData>[];
+  String orderBy = 'title, difficulty_type_id';
+  String? where;
+  List<Object?>? whereArgs;
 
   Future<void> fetchScores() {
     return _repository
-        .getCurrentScores()
+        .getVersionScores(version, where, whereArgs, orderBy)
         .then((value) => _scores = value)
         .whenComplete(notifyListeners);
   }
 
-  Future<void> refreshScores() {
-    return _repository
-        .getPrevScores()
-        .then((value) => _scores = value)
-        .whenComplete(notifyListeners);
+  void changeVersion() {
+    where = 'difficulty_type_id = ?';
+    whereArgs = [4];
+    notifyListeners();
   }
 }

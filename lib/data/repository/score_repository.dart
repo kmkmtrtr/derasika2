@@ -11,13 +11,9 @@ class ScoreRepository {
   late final ScoreDataSource _scoreDataSource =
       _reader(scoreDataSourceProvider);
 
-  Future<List<ScoreData>> getCurrentScores() async {
-    const currentVersion = 29;
-    return await _scoreDataSource.fetchVersionScores(currentVersion);
-  }
-
-  Future<List<ScoreData>> getPrevScores() async {
-    const currentVersion = 28;
-    return await _scoreDataSource.fetchVersionScores(currentVersion);
+  Future<List<ScoreData>> getVersionScores(int version, String? where,
+      List<Object?>? whereArgs, String orderBy) async {
+    return await _scoreDataSource.fetchVersionScores(
+        version, where, whereArgs, orderBy);
   }
 }

@@ -10,12 +10,19 @@ class ScoreDataSource {
   final Reader _reader;
   late final AppDB _appDb = _reader(appDBProvider);
 
-  Future<List<ScoreData>> fetchVersionScores(int version) async {
+  Future<List<ScoreData>> fetchVersionScores(int version, String? where,
+      List<Object?>? whereArgs, String? orderBy) async {
+    final List<Object?> versionArg = [version];
+    final whereCondition = (where == null || where == '')
+        ? 'score_version_id=?'
+        : 'score_version_id=? and ($where)';
     final db = await _appDb.connection;
-    final data = await db.query('version_score_view',
-        where: 'score_version_id=?',
-        whereArgs: [version],
-        orderBy: 'title, difficulty_type_id');
+    final data = await db.query(
+      'version_score_view',
+      where: whereCondition,
+      whereArgs: versionArg + (whereArgs ?? []),
+      orderBy: orderBy,
+    );
     return data
         .map(
           (e) => ScoreData(
