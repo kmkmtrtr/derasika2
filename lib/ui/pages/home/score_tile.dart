@@ -144,7 +144,7 @@ class ScoreTile extends StatelessWidget {
                     height: rowHeight,
                     child: FittedBox(
                         child: Text(
-                          '${record.misscount} ',
+                          '${record.misscount ?? '---'} ',
                           style: const TextStyle(fontSize: fontSize),
                         ),
                         fit: BoxFit.contain),

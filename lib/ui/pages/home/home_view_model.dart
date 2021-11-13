@@ -15,10 +15,20 @@ class HomeViewModel extends ChangeNotifier {
   int version = 29;
 
   List<ScoreData>? _scores;
-  List<ScoreData> get scores => _scores ?? <ScoreData>[];
+  List<ScoreData> get scores {
+    final scores = (_scores ?? <ScoreData>[]);
+    if (_filter == null || _filter == '') {
+      return scores;
+    }
+    return scores
+        .where((e) => e.title.toLowerCase().contains(_filter!.toLowerCase()))
+        .toList();
+  }
+
   String orderBy = 'title, difficulty_type_id';
   String? where;
   List<Object?>? whereArgs;
+  String? _filter;
 
   Future<void> fetchScores() {
     return _repository
@@ -30,6 +40,11 @@ class HomeViewModel extends ChangeNotifier {
   void changeVersion() {
     where = 'difficulty_type_id = ?';
     whereArgs = [4];
+    notifyListeners();
+  }
+
+  void changeFilterQuery(String filter) {
+    _filter = filter;
     notifyListeners();
   }
 }
