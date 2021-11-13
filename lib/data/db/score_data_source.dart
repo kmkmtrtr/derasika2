@@ -39,9 +39,9 @@ class ScoreDataSource {
             e['prev_score'] as int?,
             e['best_score'] as int?,
             e['clear_type'] as String,
-            e['misscount'].toString(),
-            e['prev_misscount']?.toString(),
-            e['best_misscount']?.toString(),
+            int.tryParse(e['misscount'].toString()),
+            int.tryParse(e['prev_misscount']?.toString() ?? ''),
+            int.tryParse(e['best_misscount']?.toString() ?? ''),
           ),
         )
         .toList();

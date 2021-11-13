@@ -29,17 +29,17 @@ class ScoreTile extends StatelessWidget {
             : '歴代${score - bestScore}';
     final clearTypeColor = getClearTypeColor(record.clearType);
     final prevMisscountSub =
-        (record.misscount) == '---' || (record.prevMisscount ?? '---') == '---'
+        record.misscount == null || record.prevMisscount == null
             ? ' '
-            : record.misscountValue - record.prevMisscountValue >= 0
-                ? '前作+${record.misscountValue - record.prevMisscountValue}'
-                : '前作${record.misscountValue - record.prevMisscountValue}';
+            : record.misscount! - record.prevMisscount! >= 0
+                ? '前作+${record.misscount! - record.prevMisscount!}'
+                : '前作${record.misscount! - record.prevMisscount!}';
     final bestMisscountSub =
-        (record.misscount) == '---' || (record.bestMisscount ?? '---') == '---'
+        record.misscount == null || record.bestMisscount == null
             ? ' '
-            : record.misscountValue - record.bestMisscountValue >= 0
-                ? '歴代+${record.misscountValue - record.bestMisscountValue}'
-                : '歴代${record.misscountValue - record.bestMisscountValue}';
+            : record.misscount! - record.bestMisscount! >= 0
+                ? '歴代+${record.misscount! - record.bestMisscount!}'
+                : '歴代${record.misscount! - record.bestMisscount!}';
     final titleRow = SizedBox(
       height: titleRowHeight,
       child: FittedBox(
