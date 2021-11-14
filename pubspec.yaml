@@ -27,6 +27,7 @@ dependencies:
   shared_preferences: ^2.0.8
   sqflite: ^2.0.0+4
   url_launcher: ^6.0.12
+  json_annotation: ^4.3.0
 
 dev_dependencies:
   flutter_test:
