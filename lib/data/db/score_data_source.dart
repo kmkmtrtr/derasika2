@@ -1,4 +1,5 @@
 import 'package:derasika2/data/db/app_db.dart';
+import 'package:derasika2/data/model/play_mode.dart';
 import 'package:derasika2/data/model/score_data.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,16 +12,16 @@ class ScoreDataSource {
   late final AppDB _appDb = _reader(appDBProvider);
 
   Future<List<ScoreData>> fetchVersionScores(int version, String? where,
-      List<Object?>? whereArgs, String? orderBy) async {
-    final List<Object?> versionArg = [version];
+      List<Object?>? whereArgs, String? orderBy, PlayMode playMode) async {
+    final List<Object?> defaultArg = [version, playMode.index + 1];
     final whereCondition = (where == null || where == '')
-        ? 'score_version_id=?'
-        : 'score_version_id=? and ($where)';
+        ? 'score_version_id=? and mode_type_id=?'
+        : 'score_version_id=? and mode_type_id=? and ($where)';
     final db = await _appDb.connection;
     final data = await db.query(
       'version_score_view',
       where: whereCondition,
-      whereArgs: versionArg + (whereArgs ?? []),
+      whereArgs: defaultArg + (whereArgs ?? []),
       orderBy: orderBy,
     );
     return data
