@@ -1,5 +1,6 @@
 import 'package:derasika2/data/model/score_data.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
+import 'package:derasika2/ui/pages/home/home_drawer.dart';
 import 'package:derasika2/ui/pages/home/home_view_model.dart';
 import 'package:derasika2/ui/pages/home/score_tile.dart';
 import 'package:flutter/material.dart';
@@ -8,24 +9,23 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends HookConsumerWidget {
   HomePage({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final _scrollController = ScrollController();
   final _textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeViewModel = ref.read(homeViewModelProvider);
+    final homeViewModel = ref.watch(homeViewModelProvider);
     final snapshot = useFuture(useMemoized(homeViewModel.fetchScores, [
       homeViewModel.version,
       homeViewModel.where,
       homeViewModel.whereArgs,
-      homeViewModel.orderBy
+      homeViewModel.orderBy,
+      homeViewModel.playMode
     ]));
     final scoreList = List<ScoreData>.from(
         homeViewModel.scores.where((e) => e.modeType == 1));
     return Scaffold(
       appBar: AppBar(
-        key: _scaffoldKey,
         title: TextField(
           controller: _textFieldController,
           decoration: InputDecoration(
@@ -52,10 +52,6 @@ class HomePage extends HookConsumerWidget {
             _scrollController.jumpTo(0);
             ref.watch(homeViewModelProvider).changeFilterQuery(s);
           },
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
         ),
         actions: [
           IconButton(icon: const Icon(Icons.download), onPressed: () {}),
@@ -86,15 +82,7 @@ class HomePage extends HookConsumerWidget {
           ),
         ),
       ),
-      // drawer: HomeDrawer(),
-      // floatingActionButton: snapshot.connectionState == ConnectionState.done
-      //     ? FloatingActionButton(
-      //         onPressed: () async {
-      //           ref.watch(homeViewModelProvider).changeVersion();
-      //         },
-      //         child: const Icon(Icons.change_circle_outlined),
-      //       )
-      //     : null,
+      drawer: HomeDrawer(),
     );
   }
 }

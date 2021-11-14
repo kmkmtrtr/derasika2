@@ -1,0 +1,1 @@
+enum PlayMode { sp, dp }
