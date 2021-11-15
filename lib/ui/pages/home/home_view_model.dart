@@ -12,7 +12,6 @@ class HomeViewModel extends ChangeNotifier {
 
   final Reader _reader;
   late final ScoreRepository _repository = _reader(scoreRepositoryProvider);
-  int version = 29;
   String orderBy = 'title, difficulty_type_id';
   String? where;
   List<Object?>? whereArgs;
@@ -22,29 +21,26 @@ class HomeViewModel extends ChangeNotifier {
   List<ScoreData>? _scores;
   List<ScoreData> get scores {
     final scores = (_scores ?? <ScoreData>[]);
-    if (_filter == null || _filter == '') {
+    final filter = _filter;
+    if (filter == null || filter == '') {
       return scores;
     }
-    return scores
-        .where((e) => e.title.toLowerCase().contains(_filter!.toLowerCase()))
-        .toList();
+    return scores.where((e) => e.title.toLowerCase().contains(filter)).toList();
   }
 
   Future<void> fetchScores() {
     return _repository
-        .getVersionScores(version, where, whereArgs, orderBy, playMode)
+        .getCurrentVersionScores(where, whereArgs, orderBy, playMode)
         .then((value) => _scores = value)
         .whenComplete(notifyListeners);
   }
 
-  void changeVersion() {
-    where = 'difficulty_type_id = ?';
-    whereArgs = [4];
-    notifyListeners();
+  Future<int> getCurrentVersionId() {
+    return _repository.getCurrentVersionId();
   }
 
   void changeFilterQuery(String filter) {
-    _filter = filter;
+    _filter = filter.toLowerCase();
     notifyListeners();
   }
 

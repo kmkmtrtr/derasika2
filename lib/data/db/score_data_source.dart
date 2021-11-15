@@ -2,6 +2,7 @@ import 'package:derasika2/data/db/app_db.dart';
 import 'package:derasika2/data/model/play_mode.dart';
 import 'package:derasika2/data/model/score_data.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 final scoreDataSourceProvider = Provider((ref) => ScoreDataSource(ref.read));
 
@@ -46,5 +47,15 @@ class ScoreDataSource {
           ),
         )
         .toList();
+  }
+
+  Future<int> fetchCurrentVersionId() async {
+    final db = await _appDb.connection;
+    final format = DateFormat('yyyy-MM-dd', 'ja-jp');
+    final rec = await db.query('version_master',
+        columns: ['id', 'max(rank)'],
+        where: 'start_at <= ?',
+        whereArgs: [format.format(DateTime.now())]);
+    return rec.first['id'] as int;
   }
 }
