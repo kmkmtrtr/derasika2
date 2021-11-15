@@ -1,6 +1,6 @@
 import 'package:derasika2/data/model/score_data.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
-import 'package:derasika2/ui/pages/home/home_drawer.dart';
+import 'package:derasika2/ui/pages/home/drawer/home_drawer.dart';
 import 'package:derasika2/ui/pages/home/home_view_model.dart';
 import 'package:derasika2/ui/pages/home/score_tile.dart';
 import 'package:flutter/material.dart';
