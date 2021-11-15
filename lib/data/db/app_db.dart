@@ -49,8 +49,7 @@ class AppDB {
   Future<Uint8List> _fetchNewMasterDb() async {
     final client = HttpClient();
     try {
-      final request =
-          await client.getUrl(Uri.parse(_masterSiteUri + 'iidxscore.db'));
+      final request = await client.getUrl(Uri.parse(_masterSiteUri + _dbName));
       final response = await request.close();
       return await consolidateHttpClientResponseBytes(response);
     } finally {
