@@ -74,10 +74,15 @@ class HomePage extends HookConsumerWidget {
                           ),
                           TextButton(
                             child: const Text('はい'),
-                            onPressed: () {
+                            onPressed: () async {
+                              final homeViewModel =
+                                  ref.watch(homeViewModelProvider);
                               context.popRoute();
                               context
-                                  .pushRoute(const CsvImportWebViewRoute())
+                                  .pushRoute(CsvImportWebViewRoute(
+                                      playMode: homeViewModel.playMode,
+                                      versionId: await homeViewModel
+                                          .getCurrentVersionId()))
                                   .then((result) async {
                                 return;
                               });

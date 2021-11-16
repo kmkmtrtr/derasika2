@@ -9,6 +9,7 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i3;
+import 'package:derasika2/data/model/play_mode.dart' as _i5;
 import 'package:derasika2/ui/pages/home/home_page.dart' as _i1;
 import 'package:derasika2/ui/pages/webview/csv_import_webview.dart' as _i2;
 import 'package:flutter/material.dart' as _i4;
@@ -26,9 +27,13 @@ class AppRouter extends _i3.RootStackRouter {
           routeData: routeData, child: _i1.HomePage(key: args.key));
     },
     CsvImportWebViewRoute.name: (routeData) {
+      final args = routeData.argsAs<CsvImportWebViewRouteArgs>();
       return _i3.AdaptivePage<dynamic>(
           routeData: routeData,
-          child: const _i2.CsvImportWebViewPage(),
+          child: _i2.CsvImportWebViewPage(
+              key: args.key,
+              playMode: args.playMode,
+              versionId: args.versionId),
           fullscreenDialog: true);
     }
   };
@@ -55,8 +60,25 @@ class HomeRouteArgs {
 }
 
 /// generated route for [_i2.CsvImportWebViewPage]
-class CsvImportWebViewRoute extends _i3.PageRouteInfo<void> {
-  const CsvImportWebViewRoute() : super(name, path: '/csvImportWebView');
+class CsvImportWebViewRoute
+    extends _i3.PageRouteInfo<CsvImportWebViewRouteArgs> {
+  CsvImportWebViewRoute(
+      {_i4.Key? key, required _i5.PlayMode playMode, required int versionId})
+      : super(name,
+            path: '/csvImportWebView',
+            args: CsvImportWebViewRouteArgs(
+                key: key, playMode: playMode, versionId: versionId));
 
   static const String name = 'CsvImportWebViewRoute';
+}
+
+class CsvImportWebViewRouteArgs {
+  const CsvImportWebViewRouteArgs(
+      {this.key, required this.playMode, required this.versionId});
+
+  final _i4.Key? key;
+
+  final _i5.PlayMode playMode;
+
+  final int versionId;
 }
