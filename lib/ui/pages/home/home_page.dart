@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:derasika2/data/model/score_data.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
 import 'package:derasika2/ui/pages/home/drawer/home_drawer.dart';
 import 'package:derasika2/ui/pages/home/home_view_model.dart';
 import 'package:derasika2/ui/pages/home/score_tile.dart';
+import 'package:derasika2/ui/route/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,11 +18,11 @@ class HomePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final homeViewModel = ref.watch(homeViewModelProvider);
     final snapshot = useFuture(useMemoized(homeViewModel.fetchScores, [
-      homeViewModel.version,
       homeViewModel.where,
       homeViewModel.whereArgs,
       homeViewModel.orderBy,
-      homeViewModel.playMode
+      homeViewModel.playMode,
+      homeViewModel.importDateTime,
     ]));
     final scoreList = List<ScoreData>.from(
         homeViewModel.scores.where((e) => e.modeType == 1));
@@ -54,7 +56,51 @@ class HomePage extends HookConsumerWidget {
           },
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.download), onPressed: () {}),
+          IconButton(
+              icon: const Icon(Icons.download),
+              tooltip: 'CSVダウンロード',
+              onPressed: () async {
+                await showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('確認'),
+                        content: const Text('公式サイトを開き、CSVを読み込みます。\r\nよろしいですか？'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('キャンセル'),
+                            onPressed: () {
+                              context.popRoute();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text('はい'),
+                            onPressed: () async {
+                              final homeViewModel =
+                                  ref.watch(homeViewModelProvider);
+                              context.popRoute();
+                              context
+                                  .pushRoute(CsvImportWebViewRoute(
+                                      playMode: homeViewModel.playMode,
+                                      versionId: await homeViewModel
+                                          .getCurrentVersionId()))
+                                  .then((result) async {
+                                if (result is! List<String>) {
+                                  return;
+                                }
+                                await ref
+                                    .watch(homeViewModelProvider)
+                                    .importCsv(result);
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     const SnackBar(
+                                //         content: Text('CSVを読み込みました')));
+                              });
+                            },
+                          )
+                        ],
+                      );
+                    });
+              }),
           IconButton(icon: const Icon(Icons.sort), onPressed: () {}),
           IconButton(icon: const Icon(Icons.filter_alt), onPressed: () {}),
         ],

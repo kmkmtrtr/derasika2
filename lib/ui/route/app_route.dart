@@ -3,6 +3,7 @@ export 'app_route.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:derasika2/ui/pages/home/home_page.dart';
 import 'package:derasika2/ui/pages/score_detail/score_detail_page.dart';
+import 'package:derasika2/ui/pages/webview/csv_import_webview.dart';
 
 @AdaptiveAutoRouter(
   replaceInRouteName: 'Page,Route',
@@ -14,6 +15,11 @@ import 'package:derasika2/ui/pages/score_detail/score_detail_page.dart';
     AutoRoute(
       path: '/charts/:id',
       page: ScoreDetailPage,
+      fullscreenDialog: true,
+    ),
+    AutoRoute(
+      path: '/csvImportWebView',
+      page: CsvImportWebViewPage,
       fullscreenDialog: true,
     ),
   ],
