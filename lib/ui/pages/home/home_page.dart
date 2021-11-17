@@ -21,7 +21,8 @@ class HomePage extends HookConsumerWidget {
       homeViewModel.where,
       homeViewModel.whereArgs,
       homeViewModel.orderBy,
-      homeViewModel.playMode
+      homeViewModel.playMode,
+      homeViewModel.importDateTime,
     ]));
     final scoreList = List<ScoreData>.from(
         homeViewModel.scores.where((e) => e.modeType == 1));
@@ -84,7 +85,15 @@ class HomePage extends HookConsumerWidget {
                                       versionId: await homeViewModel
                                           .getCurrentVersionId()))
                                   .then((result) async {
-                                return;
+                                if (result is! List<String>) {
+                                  return;
+                                }
+                                await ref
+                                    .watch(homeViewModelProvider)
+                                    .importCsv(result);
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //     const SnackBar(
+                                //         content: Text('CSVを読み込みました')));
                               });
                             },
                           )

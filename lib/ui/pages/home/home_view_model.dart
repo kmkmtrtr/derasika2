@@ -17,6 +17,7 @@ class HomeViewModel extends ChangeNotifier {
   List<Object?>? whereArgs;
   String? _filter;
   PlayMode playMode = PlayMode.sp;
+  DateTime? importDateTime;
 
   List<ScoreData>? _scores;
   List<ScoreData> get scores {
@@ -46,6 +47,12 @@ class HomeViewModel extends ChangeNotifier {
 
   void changeMode(PlayMode mode) {
     playMode = mode;
+    notifyListeners();
+  }
+
+  Future<void> importCsv(List<String> csvData) async {
+    await _repository.importCsv(csvData, playMode);
+    importDateTime = DateTime.now();
     notifyListeners();
   }
 }

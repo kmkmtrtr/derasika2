@@ -38,16 +38,11 @@ class CsvImportWebViewPage extends StatelessWidget {
           if (scoreData == 'null') {
             return;
           }
+          // runJavascriptReturningResult で返される文字列を利用可能な形式にする
           final csvData = scoreData
               .replaceAll(RegExp(r'^\"|\"$'), '')
-              .replaceFirst(RegExp(r'\\n$'), '')
-              .replaceAll('\\"', '"');
-          // if (csvData.length == 0) {
-          //   Navigator.pop(context, csvData);
-          //   return;
-          // }
-          // final csv = Csv(csvData, _mode);
-          // await csv.upsert();
+              .replaceAll('\\"', '"')
+              .split('\\n');
           context.popRoute(csvData);
         },
       ),
