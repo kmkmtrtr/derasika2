@@ -22,33 +22,33 @@ class _$CsvUntilRootageTearOff {
   const _$CsvUntilRootageTearOff();
 
   _CsvUntilRootage call(
-      String version,
-      String title,
-      String genre,
-      String artist,
-      String playcount,
-      String normalLevel,
-      String normalExScore,
-      String normalPgreat,
-      String normalGreat,
-      String normalMisscount,
-      String normalClearType,
-      String normalDjlevel,
-      String hyperLevel,
-      String hyperExScore,
-      String hyperPgreat,
-      String hyperGreat,
-      String hyperMisscount,
-      String hyperClearType,
-      String hyperDjlevel,
-      String anotherLevel,
-      String anotherExScore,
-      String anotherPgreat,
-      String anotherGreat,
-      String anotherMisscount,
-      String anotherClearType,
-      String anotherDjlevel,
-      String lastplayAt) {
+      @JsonKey(name: 'バージョン') String version,
+      @JsonKey(name: 'タイトル') String title,
+      @JsonKey(name: 'ジャンル') String genre,
+      @JsonKey(name: 'アーティスト') String artist,
+      @JsonKey(name: 'プレー回数') String playcount,
+      @JsonKey(name: 'NORMAL 難易度') String normalLevel,
+      @JsonKey(name: 'NORMAL EXスコア') String normalExScore,
+      @JsonKey(name: 'NORMAL PGreat') String normalPgreat,
+      @JsonKey(name: 'NORMAL Great') String normalGreat,
+      @JsonKey(name: 'NORMAL ミスカウント') String normalMisscount,
+      @JsonKey(name: 'NORMAL クリアタイプ') String normalClearType,
+      @JsonKey(name: 'NORMAL DJ LEVEL') String normalDjlevel,
+      @JsonKey(name: 'HYPER 難易度') String hyperLevel,
+      @JsonKey(name: 'HYPER EXスコア') String hyperExScore,
+      @JsonKey(name: 'HYPER PGreat') String hyperPgreat,
+      @JsonKey(name: 'HYPER Great') String hyperGreat,
+      @JsonKey(name: 'HYPER ミスカウント') String hyperMisscount,
+      @JsonKey(name: 'HYPER クリアタイプ') String hyperClearType,
+      @JsonKey(name: 'HYPER DJ LEVEL') String hyperDjlevel,
+      @JsonKey(name: 'ANOTHER 難易度') String anotherLevel,
+      @JsonKey(name: 'ANOTHER EXスコア') String anotherExScore,
+      @JsonKey(name: 'ANOTHER PGreat') String anotherPgreat,
+      @JsonKey(name: 'ANOTHER Great') String anotherGreat,
+      @JsonKey(name: 'ANOTHER ミスカウント') String anotherMisscount,
+      @JsonKey(name: 'ANOTHER クリアタイプ') String anotherClearType,
+      @JsonKey(name: 'ANOTHER DJ LEVEL') String anotherDjlevel,
+      @JsonKey(name: '最終プレー日時') String lastplayAt) {
     return _CsvUntilRootage(
       version,
       title,
@@ -90,32 +90,59 @@ const $CsvUntilRootage = _$CsvUntilRootageTearOff();
 
 /// @nodoc
 mixin _$CsvUntilRootage {
+  @JsonKey(name: 'バージョン')
   String get version => throw _privateConstructorUsedError;
+  @JsonKey(name: 'タイトル')
   String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ジャンル')
   String get genre => throw _privateConstructorUsedError;
+  @JsonKey(name: 'アーティスト')
   String get artist => throw _privateConstructorUsedError;
+  @JsonKey(name: 'プレー回数')
   String get playcount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'NORMAL 難易度')
   String get normalLevel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'NORMAL EXスコア')
   String get normalExScore => throw _privateConstructorUsedError;
+  @JsonKey(name: 'NORMAL PGreat')
   String get normalPgreat => throw _privateConstructorUsedError;
+  @JsonKey(name: 'NORMAL Great')
   String get normalGreat => throw _privateConstructorUsedError;
+  @JsonKey(name: 'NORMAL ミスカウント')
   String get normalMisscount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'NORMAL クリアタイプ')
   String get normalClearType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'NORMAL DJ LEVEL')
   String get normalDjlevel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'HYPER 難易度')
   String get hyperLevel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'HYPER EXスコア')
   String get hyperExScore => throw _privateConstructorUsedError;
+  @JsonKey(name: 'HYPER PGreat')
   String get hyperPgreat => throw _privateConstructorUsedError;
+  @JsonKey(name: 'HYPER Great')
   String get hyperGreat => throw _privateConstructorUsedError;
+  @JsonKey(name: 'HYPER ミスカウント')
   String get hyperMisscount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'HYPER クリアタイプ')
   String get hyperClearType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'HYPER DJ LEVEL')
   String get hyperDjlevel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ANOTHER 難易度')
   String get anotherLevel => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ANOTHER EXスコア')
   String get anotherExScore => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ANOTHER PGreat')
   String get anotherPgreat => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ANOTHER Great')
   String get anotherGreat => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ANOTHER ミスカウント')
   String get anotherMisscount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ANOTHER クリアタイプ')
   String get anotherClearType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ANOTHER DJ LEVEL')
   String get anotherDjlevel => throw _privateConstructorUsedError;
+  @JsonKey(name: '最終プレー日時')
   String get lastplayAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -130,33 +157,33 @@ abstract class $CsvUntilRootageCopyWith<$Res> {
           CsvUntilRootage value, $Res Function(CsvUntilRootage) then) =
       _$CsvUntilRootageCopyWithImpl<$Res>;
   $Res call(
-      {String version,
-      String title,
-      String genre,
-      String artist,
-      String playcount,
-      String normalLevel,
-      String normalExScore,
-      String normalPgreat,
-      String normalGreat,
-      String normalMisscount,
-      String normalClearType,
-      String normalDjlevel,
-      String hyperLevel,
-      String hyperExScore,
-      String hyperPgreat,
-      String hyperGreat,
-      String hyperMisscount,
-      String hyperClearType,
-      String hyperDjlevel,
-      String anotherLevel,
-      String anotherExScore,
-      String anotherPgreat,
-      String anotherGreat,
-      String anotherMisscount,
-      String anotherClearType,
-      String anotherDjlevel,
-      String lastplayAt});
+      {@JsonKey(name: 'バージョン') String version,
+      @JsonKey(name: 'タイトル') String title,
+      @JsonKey(name: 'ジャンル') String genre,
+      @JsonKey(name: 'アーティスト') String artist,
+      @JsonKey(name: 'プレー回数') String playcount,
+      @JsonKey(name: 'NORMAL 難易度') String normalLevel,
+      @JsonKey(name: 'NORMAL EXスコア') String normalExScore,
+      @JsonKey(name: 'NORMAL PGreat') String normalPgreat,
+      @JsonKey(name: 'NORMAL Great') String normalGreat,
+      @JsonKey(name: 'NORMAL ミスカウント') String normalMisscount,
+      @JsonKey(name: 'NORMAL クリアタイプ') String normalClearType,
+      @JsonKey(name: 'NORMAL DJ LEVEL') String normalDjlevel,
+      @JsonKey(name: 'HYPER 難易度') String hyperLevel,
+      @JsonKey(name: 'HYPER EXスコア') String hyperExScore,
+      @JsonKey(name: 'HYPER PGreat') String hyperPgreat,
+      @JsonKey(name: 'HYPER Great') String hyperGreat,
+      @JsonKey(name: 'HYPER ミスカウント') String hyperMisscount,
+      @JsonKey(name: 'HYPER クリアタイプ') String hyperClearType,
+      @JsonKey(name: 'HYPER DJ LEVEL') String hyperDjlevel,
+      @JsonKey(name: 'ANOTHER 難易度') String anotherLevel,
+      @JsonKey(name: 'ANOTHER EXスコア') String anotherExScore,
+      @JsonKey(name: 'ANOTHER PGreat') String anotherPgreat,
+      @JsonKey(name: 'ANOTHER Great') String anotherGreat,
+      @JsonKey(name: 'ANOTHER ミスカウント') String anotherMisscount,
+      @JsonKey(name: 'ANOTHER クリアタイプ') String anotherClearType,
+      @JsonKey(name: 'ANOTHER DJ LEVEL') String anotherDjlevel,
+      @JsonKey(name: '最終プレー日時') String lastplayAt});
 }
 
 /// @nodoc
@@ -319,33 +346,33 @@ abstract class _$CsvUntilRootageCopyWith<$Res>
       __$CsvUntilRootageCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String version,
-      String title,
-      String genre,
-      String artist,
-      String playcount,
-      String normalLevel,
-      String normalExScore,
-      String normalPgreat,
-      String normalGreat,
-      String normalMisscount,
-      String normalClearType,
-      String normalDjlevel,
-      String hyperLevel,
-      String hyperExScore,
-      String hyperPgreat,
-      String hyperGreat,
-      String hyperMisscount,
-      String hyperClearType,
-      String hyperDjlevel,
-      String anotherLevel,
-      String anotherExScore,
-      String anotherPgreat,
-      String anotherGreat,
-      String anotherMisscount,
-      String anotherClearType,
-      String anotherDjlevel,
-      String lastplayAt});
+      {@JsonKey(name: 'バージョン') String version,
+      @JsonKey(name: 'タイトル') String title,
+      @JsonKey(name: 'ジャンル') String genre,
+      @JsonKey(name: 'アーティスト') String artist,
+      @JsonKey(name: 'プレー回数') String playcount,
+      @JsonKey(name: 'NORMAL 難易度') String normalLevel,
+      @JsonKey(name: 'NORMAL EXスコア') String normalExScore,
+      @JsonKey(name: 'NORMAL PGreat') String normalPgreat,
+      @JsonKey(name: 'NORMAL Great') String normalGreat,
+      @JsonKey(name: 'NORMAL ミスカウント') String normalMisscount,
+      @JsonKey(name: 'NORMAL クリアタイプ') String normalClearType,
+      @JsonKey(name: 'NORMAL DJ LEVEL') String normalDjlevel,
+      @JsonKey(name: 'HYPER 難易度') String hyperLevel,
+      @JsonKey(name: 'HYPER EXスコア') String hyperExScore,
+      @JsonKey(name: 'HYPER PGreat') String hyperPgreat,
+      @JsonKey(name: 'HYPER Great') String hyperGreat,
+      @JsonKey(name: 'HYPER ミスカウント') String hyperMisscount,
+      @JsonKey(name: 'HYPER クリアタイプ') String hyperClearType,
+      @JsonKey(name: 'HYPER DJ LEVEL') String hyperDjlevel,
+      @JsonKey(name: 'ANOTHER 難易度') String anotherLevel,
+      @JsonKey(name: 'ANOTHER EXスコア') String anotherExScore,
+      @JsonKey(name: 'ANOTHER PGreat') String anotherPgreat,
+      @JsonKey(name: 'ANOTHER Great') String anotherGreat,
+      @JsonKey(name: 'ANOTHER ミスカウント') String anotherMisscount,
+      @JsonKey(name: 'ANOTHER クリアタイプ') String anotherClearType,
+      @JsonKey(name: 'ANOTHER DJ LEVEL') String anotherDjlevel,
+      @JsonKey(name: '最終プレー日時') String lastplayAt});
 }
 
 /// @nodoc
@@ -506,90 +533,117 @@ class __$CsvUntilRootageCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CsvUntilRootage implements _CsvUntilRootage {
   _$_CsvUntilRootage(
-      this.version,
-      this.title,
-      this.genre,
-      this.artist,
-      this.playcount,
-      this.normalLevel,
-      this.normalExScore,
-      this.normalPgreat,
-      this.normalGreat,
-      this.normalMisscount,
-      this.normalClearType,
-      this.normalDjlevel,
-      this.hyperLevel,
-      this.hyperExScore,
-      this.hyperPgreat,
-      this.hyperGreat,
-      this.hyperMisscount,
-      this.hyperClearType,
-      this.hyperDjlevel,
-      this.anotherLevel,
-      this.anotherExScore,
-      this.anotherPgreat,
-      this.anotherGreat,
-      this.anotherMisscount,
-      this.anotherClearType,
-      this.anotherDjlevel,
-      this.lastplayAt);
+      @JsonKey(name: 'バージョン') this.version,
+      @JsonKey(name: 'タイトル') this.title,
+      @JsonKey(name: 'ジャンル') this.genre,
+      @JsonKey(name: 'アーティスト') this.artist,
+      @JsonKey(name: 'プレー回数') this.playcount,
+      @JsonKey(name: 'NORMAL 難易度') this.normalLevel,
+      @JsonKey(name: 'NORMAL EXスコア') this.normalExScore,
+      @JsonKey(name: 'NORMAL PGreat') this.normalPgreat,
+      @JsonKey(name: 'NORMAL Great') this.normalGreat,
+      @JsonKey(name: 'NORMAL ミスカウント') this.normalMisscount,
+      @JsonKey(name: 'NORMAL クリアタイプ') this.normalClearType,
+      @JsonKey(name: 'NORMAL DJ LEVEL') this.normalDjlevel,
+      @JsonKey(name: 'HYPER 難易度') this.hyperLevel,
+      @JsonKey(name: 'HYPER EXスコア') this.hyperExScore,
+      @JsonKey(name: 'HYPER PGreat') this.hyperPgreat,
+      @JsonKey(name: 'HYPER Great') this.hyperGreat,
+      @JsonKey(name: 'HYPER ミスカウント') this.hyperMisscount,
+      @JsonKey(name: 'HYPER クリアタイプ') this.hyperClearType,
+      @JsonKey(name: 'HYPER DJ LEVEL') this.hyperDjlevel,
+      @JsonKey(name: 'ANOTHER 難易度') this.anotherLevel,
+      @JsonKey(name: 'ANOTHER EXスコア') this.anotherExScore,
+      @JsonKey(name: 'ANOTHER PGreat') this.anotherPgreat,
+      @JsonKey(name: 'ANOTHER Great') this.anotherGreat,
+      @JsonKey(name: 'ANOTHER ミスカウント') this.anotherMisscount,
+      @JsonKey(name: 'ANOTHER クリアタイプ') this.anotherClearType,
+      @JsonKey(name: 'ANOTHER DJ LEVEL') this.anotherDjlevel,
+      @JsonKey(name: '最終プレー日時') this.lastplayAt);
 
   factory _$_CsvUntilRootage.fromJson(Map<String, dynamic> json) =>
       _$$_CsvUntilRootageFromJson(json);
 
   @override
+  @JsonKey(name: 'バージョン')
   final String version;
   @override
+  @JsonKey(name: 'タイトル')
   final String title;
   @override
+  @JsonKey(name: 'ジャンル')
   final String genre;
   @override
+  @JsonKey(name: 'アーティスト')
   final String artist;
   @override
+  @JsonKey(name: 'プレー回数')
   final String playcount;
   @override
+  @JsonKey(name: 'NORMAL 難易度')
   final String normalLevel;
   @override
+  @JsonKey(name: 'NORMAL EXスコア')
   final String normalExScore;
   @override
+  @JsonKey(name: 'NORMAL PGreat')
   final String normalPgreat;
   @override
+  @JsonKey(name: 'NORMAL Great')
   final String normalGreat;
   @override
+  @JsonKey(name: 'NORMAL ミスカウント')
   final String normalMisscount;
   @override
+  @JsonKey(name: 'NORMAL クリアタイプ')
   final String normalClearType;
   @override
+  @JsonKey(name: 'NORMAL DJ LEVEL')
   final String normalDjlevel;
   @override
+  @JsonKey(name: 'HYPER 難易度')
   final String hyperLevel;
   @override
+  @JsonKey(name: 'HYPER EXスコア')
   final String hyperExScore;
   @override
+  @JsonKey(name: 'HYPER PGreat')
   final String hyperPgreat;
   @override
+  @JsonKey(name: 'HYPER Great')
   final String hyperGreat;
   @override
+  @JsonKey(name: 'HYPER ミスカウント')
   final String hyperMisscount;
   @override
+  @JsonKey(name: 'HYPER クリアタイプ')
   final String hyperClearType;
   @override
+  @JsonKey(name: 'HYPER DJ LEVEL')
   final String hyperDjlevel;
   @override
+  @JsonKey(name: 'ANOTHER 難易度')
   final String anotherLevel;
   @override
+  @JsonKey(name: 'ANOTHER EXスコア')
   final String anotherExScore;
   @override
+  @JsonKey(name: 'ANOTHER PGreat')
   final String anotherPgreat;
   @override
+  @JsonKey(name: 'ANOTHER Great')
   final String anotherGreat;
   @override
+  @JsonKey(name: 'ANOTHER ミスカウント')
   final String anotherMisscount;
   @override
+  @JsonKey(name: 'ANOTHER クリアタイプ')
   final String anotherClearType;
   @override
+  @JsonKey(name: 'ANOTHER DJ LEVEL')
   final String anotherDjlevel;
   @override
+  @JsonKey(name: '最終プレー日時')
   final String lastplayAt;
 
   @override
@@ -699,90 +753,117 @@ class _$_CsvUntilRootage implements _CsvUntilRootage {
 
 abstract class _CsvUntilRootage implements CsvUntilRootage {
   factory _CsvUntilRootage(
-      String version,
-      String title,
-      String genre,
-      String artist,
-      String playcount,
-      String normalLevel,
-      String normalExScore,
-      String normalPgreat,
-      String normalGreat,
-      String normalMisscount,
-      String normalClearType,
-      String normalDjlevel,
-      String hyperLevel,
-      String hyperExScore,
-      String hyperPgreat,
-      String hyperGreat,
-      String hyperMisscount,
-      String hyperClearType,
-      String hyperDjlevel,
-      String anotherLevel,
-      String anotherExScore,
-      String anotherPgreat,
-      String anotherGreat,
-      String anotherMisscount,
-      String anotherClearType,
-      String anotherDjlevel,
-      String lastplayAt) = _$_CsvUntilRootage;
+      @JsonKey(name: 'バージョン') String version,
+      @JsonKey(name: 'タイトル') String title,
+      @JsonKey(name: 'ジャンル') String genre,
+      @JsonKey(name: 'アーティスト') String artist,
+      @JsonKey(name: 'プレー回数') String playcount,
+      @JsonKey(name: 'NORMAL 難易度') String normalLevel,
+      @JsonKey(name: 'NORMAL EXスコア') String normalExScore,
+      @JsonKey(name: 'NORMAL PGreat') String normalPgreat,
+      @JsonKey(name: 'NORMAL Great') String normalGreat,
+      @JsonKey(name: 'NORMAL ミスカウント') String normalMisscount,
+      @JsonKey(name: 'NORMAL クリアタイプ') String normalClearType,
+      @JsonKey(name: 'NORMAL DJ LEVEL') String normalDjlevel,
+      @JsonKey(name: 'HYPER 難易度') String hyperLevel,
+      @JsonKey(name: 'HYPER EXスコア') String hyperExScore,
+      @JsonKey(name: 'HYPER PGreat') String hyperPgreat,
+      @JsonKey(name: 'HYPER Great') String hyperGreat,
+      @JsonKey(name: 'HYPER ミスカウント') String hyperMisscount,
+      @JsonKey(name: 'HYPER クリアタイプ') String hyperClearType,
+      @JsonKey(name: 'HYPER DJ LEVEL') String hyperDjlevel,
+      @JsonKey(name: 'ANOTHER 難易度') String anotherLevel,
+      @JsonKey(name: 'ANOTHER EXスコア') String anotherExScore,
+      @JsonKey(name: 'ANOTHER PGreat') String anotherPgreat,
+      @JsonKey(name: 'ANOTHER Great') String anotherGreat,
+      @JsonKey(name: 'ANOTHER ミスカウント') String anotherMisscount,
+      @JsonKey(name: 'ANOTHER クリアタイプ') String anotherClearType,
+      @JsonKey(name: 'ANOTHER DJ LEVEL') String anotherDjlevel,
+      @JsonKey(name: '最終プレー日時') String lastplayAt) = _$_CsvUntilRootage;
 
   factory _CsvUntilRootage.fromJson(Map<String, dynamic> json) =
       _$_CsvUntilRootage.fromJson;
 
   @override
+  @JsonKey(name: 'バージョン')
   String get version;
   @override
+  @JsonKey(name: 'タイトル')
   String get title;
   @override
+  @JsonKey(name: 'ジャンル')
   String get genre;
   @override
+  @JsonKey(name: 'アーティスト')
   String get artist;
   @override
+  @JsonKey(name: 'プレー回数')
   String get playcount;
   @override
+  @JsonKey(name: 'NORMAL 難易度')
   String get normalLevel;
   @override
+  @JsonKey(name: 'NORMAL EXスコア')
   String get normalExScore;
   @override
+  @JsonKey(name: 'NORMAL PGreat')
   String get normalPgreat;
   @override
+  @JsonKey(name: 'NORMAL Great')
   String get normalGreat;
   @override
+  @JsonKey(name: 'NORMAL ミスカウント')
   String get normalMisscount;
   @override
+  @JsonKey(name: 'NORMAL クリアタイプ')
   String get normalClearType;
   @override
+  @JsonKey(name: 'NORMAL DJ LEVEL')
   String get normalDjlevel;
   @override
+  @JsonKey(name: 'HYPER 難易度')
   String get hyperLevel;
   @override
+  @JsonKey(name: 'HYPER EXスコア')
   String get hyperExScore;
   @override
+  @JsonKey(name: 'HYPER PGreat')
   String get hyperPgreat;
   @override
+  @JsonKey(name: 'HYPER Great')
   String get hyperGreat;
   @override
+  @JsonKey(name: 'HYPER ミスカウント')
   String get hyperMisscount;
   @override
+  @JsonKey(name: 'HYPER クリアタイプ')
   String get hyperClearType;
   @override
+  @JsonKey(name: 'HYPER DJ LEVEL')
   String get hyperDjlevel;
   @override
+  @JsonKey(name: 'ANOTHER 難易度')
   String get anotherLevel;
   @override
+  @JsonKey(name: 'ANOTHER EXスコア')
   String get anotherExScore;
   @override
+  @JsonKey(name: 'ANOTHER PGreat')
   String get anotherPgreat;
   @override
+  @JsonKey(name: 'ANOTHER Great')
   String get anotherGreat;
   @override
+  @JsonKey(name: 'ANOTHER ミスカウント')
   String get anotherMisscount;
   @override
+  @JsonKey(name: 'ANOTHER クリアタイプ')
   String get anotherClearType;
   @override
+  @JsonKey(name: 'ANOTHER DJ LEVEL')
   String get anotherDjlevel;
   @override
+  @JsonKey(name: '最終プレー日時')
   String get lastplayAt;
   @override
   @JsonKey(ignore: true)
