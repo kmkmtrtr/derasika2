@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:auto_route/annotations.dart';
-import 'package:derasika2/data/model/chart_detail.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
 import 'package:derasika2/ui/pages/score_detail/score_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,240 +53,157 @@ class ScoreDetailPage extends HookConsumerWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                // Container(
-                //   margin: const EdgeInsets.all(10),
-                //   decoration: BoxDecoration(
-                //     color: Colors.white,
-                //     borderRadius: BorderRadius.circular(10),
-                //     boxShadow: const [
-                //       BoxShadow(
-                //         color: Color(0x80000000),
-                //         offset: Offset(0, 4),
-                //         blurRadius: 6,
-                //       )
-                //     ],
-                //   ),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: <Widget>[
-                //       ClipRRect(
-                //           borderRadius: const BorderRadius.only(
-                //             topLeft: Radius.circular(10),
-                //             bottomLeft: Radius.circular(10),
-                //           ),
-                //           child: Image.network(
-                //             'https://picsum.photos/200',
-                //             width: 100,
-                //             height: 100,
-                //           )),
-                //       const SizedBox(
-                //         width: 10,
-                //       ),
-                //       Column(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           children: const <Widget>[
-                //             SizedBox(height: 10),
-                //             Text(
-                //               'tedukuri Card',
-                //               style: TextStyle(
-                //                 fontSize: 26,
-                //                 fontWeight: FontWeight.bold,
-                //                 color: Color(0xff333333),
-                //               ),
-                //             ),
-                //             Text(
-                //               'description',
-                //               style: TextStyle(
-                //                 fontSize: 18,
-                //                 fontWeight: FontWeight.normal,
-                //                 color: Color(0xff333333),
-                //               ),
-                //             ),
-                //           ]),
-                //     ],
-                //   ),
-                // ),
-                Container(
+                Card(
                   margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x80000000),
-                        offset: Offset(0, 4),
-                        blurRadius: 6,
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Score Detail',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff333333),
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Score Detail',
+                          style: TextStyle(fontSize: 24),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Text('Historical Score'),
-                              Text(
-                                scoreViewModel.scores.any((e) => true)
-                                    ? scoreViewModel.scores
-                                        .map((e) => e.score)
-                                        .reduce(max)
-                                        .toString()
-                                    : '',
-                                style: TextStyle(fontSize: 36),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text('Current Score'),
-                              Text(
-                                scoreViewModel.scores.any((e) => true)
-                                    ? scoreViewModel.scores.first.score
-                                        .toString()
-                                    : '',
-                                style: TextStyle(fontSize: 36),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            children: [
-                              Text('Historical misscount'),
-                              Text(
-                                scoreViewModel.scores.any((e) => true)
-                                    ? scoreViewModel.scores
-                                        .where((e) => e.misscount != null)
-                                        .map((e) => e.misscount!)
-                                        .reduce(min)
-                                        .toString()
-                                    : '---',
-                                style: TextStyle(fontSize: 36),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text('Current misscount'),
-                              Text(
-                                scoreViewModel.scores.any((e) => true)
-                                    ? scoreViewModel.scores.first.misscount
-                                            ?.toString() ??
-                                        '---'
-                                    : '---',
-                                style: TextStyle(fontSize: 36),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x80000000),
-                        offset: Offset(0, 4),
-                        blurRadius: 6,
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Score Update Detail',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff333333),
-                        ),
-                      ),
-                      FittedBox(
-                        child: DataTable(
-                          columnSpacing: 20,
-                          columns: const [
-                            DataColumn(
-                              label: Text('Version'),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                const Text('Historical Score'),
+                                Text(
+                                  scoreViewModel.scores.any((e) => true)
+                                      ? scoreViewModel.scores
+                                          .map((e) => e.score)
+                                          .reduce(max)
+                                          .toString()
+                                      : '',
+                                  style: const TextStyle(fontSize: 36),
+                                )
+                              ],
                             ),
-                            DataColumn(
-                              label: Text('Update\r\nDate'),
-                            ),
-                            DataColumn(
-                              label: Text('Clear\r\nLamp'),
-                            ),
-                            DataColumn(
-                              label: Text('Best\r\nScore'),
-                            ),
-                            DataColumn(
-                              label: Text('Score\r\nPace'),
-                            ),
-                            DataColumn(
-                              label: Text('Miss\r\nCount'),
+                            Column(
+                              children: [
+                                const Text('Current Score'),
+                                Text(
+                                  scoreViewModel.scores.any((e) => true)
+                                      ? scoreViewModel.scores.first.score
+                                          .toString()
+                                      : '',
+                                  style: const TextStyle(fontSize: 36),
+                                )
+                              ],
                             ),
                           ],
-                          rows: scoreViewModel.scores
-                              .map(
-                                (e) => DataRow(
-                                  cells: [
-                                    DataCell(Text(e.version
-                                        .toString()
-                                        .replaceAll(' ', '\r\n'))),
-                                    DataCell(Text(e.updatedAt)),
-                                    DataCell(Text(e.clearType
-                                        .toString()
-                                        .replaceAll(' CLEAR', '\r\nCLEAR'))),
-                                    DataCell(Container(
-                                      child: Text(e.score.toString()),
-                                      alignment: Alignment.centerRight,
-                                    )),
-                                    DataCell(Container(
-                                      child: Text(
-                                          '${e.scorePace}\r\n${e.nextScorePace}'),
-                                      alignment: Alignment.center,
-                                    )),
-                                    DataCell(
-                                      Container(
-                                        child: Text(
-                                            e.misscount?.toString() ?? '---'),
-                                        alignment: Alignment.centerRight,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                              .toList(),
                         ),
-                      ),
-                      Row(
-                        children: [],
-                      )
-                    ],
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                const Text('Historical misscount'),
+                                Text(
+                                  scoreViewModel.scores.any((e) => true)
+                                      ? scoreViewModel.scores
+                                          .where((e) => e.misscount != null)
+                                          .map((e) => e.misscount!)
+                                          .reduce(min)
+                                          .toString()
+                                      : '---',
+                                  style: const TextStyle(fontSize: 36),
+                                )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                const Text('Current misscount'),
+                                Text(
+                                  scoreViewModel.scores.any((e) => true)
+                                      ? scoreViewModel.scores.first.misscount
+                                              ?.toString() ??
+                                          '---'
+                                      : '---',
+                                  style: const TextStyle(fontSize: 36),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+                Card(
+                  margin: const EdgeInsets.all(10),
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Score Update Detail',
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        FittedBox(
+                          child: DataTable(
+                            columnSpacing: 20,
+                            columns: const [
+                              DataColumn(
+                                label: Text('Version'),
+                              ),
+                              DataColumn(
+                                label: Text('Update\r\nDate'),
+                              ),
+                              DataColumn(
+                                label: Text('Clear\r\nLamp'),
+                              ),
+                              DataColumn(
+                                label: Text('Best\r\nScore'),
+                              ),
+                              DataColumn(
+                                label: Text('Score\r\nPace'),
+                              ),
+                              DataColumn(
+                                label: Text('Miss\r\nCount'),
+                              ),
+                            ],
+                            rows: scoreViewModel.scores
+                                .map(
+                                  (e) => DataRow(
+                                    cells: [
+                                      DataCell(Text(e.version
+                                          .toString()
+                                          .replaceAll(' ', '\r\n'))),
+                                      DataCell(Text(e.updatedAt)),
+                                      DataCell(Text(e.clearType
+                                          .toString()
+                                          .replaceAll(' CLEAR', '\r\nCLEAR'))),
+                                      DataCell(Container(
+                                        child: Text(e.score.toString()),
+                                        alignment: Alignment.centerRight,
+                                      )),
+                                      DataCell(Container(
+                                        child: Text(
+                                            '${e.scorePace}\r\n${e.nextScorePace}'),
+                                        alignment: Alignment.center,
+                                      )),
+                                      DataCell(
+                                        Container(
+                                          child: Text(
+                                              e.misscount?.toString() ?? '---'),
+                                          alignment: Alignment.centerRight,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),

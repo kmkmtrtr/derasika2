@@ -26,6 +26,7 @@ class ScoreViewModel extends ChangeNotifier {
   int _currentIndex = 0;
 
   Future<void> fetchChartDetail() {
+    _currentIndex = 0;
     return Future.wait([
       _scoreRepository.getChartScores(_chartId ?? 1),
       _chartRepository.getChartDetail(_chartId ?? 1),
