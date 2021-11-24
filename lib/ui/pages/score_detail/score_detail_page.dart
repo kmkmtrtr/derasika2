@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:auto_route/annotations.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
 import 'package:derasika2/ui/pages/score_detail/score_view_model.dart';
@@ -7,6 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final scoreDetailPageProvider = StateProvider.autoDispose<ScoreDetailPageType>(
+    (ref) => ScoreDetailPageType.score);
+
+enum ScoreDetailPageType {
+  score,
+  chart,
+  memo,
+  info,
+}
 
 class ScoreDetailPage extends HookConsumerWidget {
   const ScoreDetailPage({Key? key, @PathParam('id') required this.chartId})
@@ -16,10 +24,11 @@ class ScoreDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final pageType = ref.watch(scoreDetailPageProvider);
     final scoreViewModel = ref.watch(scoreViewModelProvider);
     scoreViewModel.setChartId(chartId);
     final snapshot =
-        useFuture(useMemoized(scoreViewModel.fetchChartDetail, [chartId]));
+        useFuture(useMemoized(scoreViewModel.getChartDetail, [chartId]));
     final chartDetail = scoreViewModel.chartDetail;
     return Scaffold(
       appBar: AppBar(
@@ -44,8 +53,8 @@ class ScoreDetailPage extends HookConsumerWidget {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         showUnselectedLabels: true,
-        currentIndex: scoreViewModel.currentIndex,
-        onTap: (index) => scoreViewModel.currentIndex = index,
+        currentIndex: pageType.state.index,
+        onTap: (index) => pageType.state = ScoreDetailPageType.values[index],
       ),
       body: LoadingContainer(
         isLoaded: snapshot.connectionState == ConnectionState.done,
@@ -71,12 +80,9 @@ class ScoreDetailPage extends HookConsumerWidget {
                               children: [
                                 const Text('Historical Score'),
                                 Text(
-                                  scoreViewModel.scores.any((e) => true)
-                                      ? scoreViewModel.scores
-                                          .map((e) => e.score)
-                                          .reduce(max)
-                                          .toString()
-                                      : '',
+                                  scoreViewModel.historicalScoreRecord?.score
+                                          .toString() ??
+                                      '',
                                   style: const TextStyle(fontSize: 36),
                                 )
                               ],
@@ -85,10 +91,9 @@ class ScoreDetailPage extends HookConsumerWidget {
                               children: [
                                 const Text('Current Score'),
                                 Text(
-                                  scoreViewModel.scores.any((e) => true)
-                                      ? scoreViewModel.scores.first.score
-                                          .toString()
-                                      : '',
+                                  scoreViewModel.currentRecord?.score
+                                          .toString() ??
+                                      '',
                                   style: const TextStyle(fontSize: 36),
                                 )
                               ],
@@ -103,13 +108,10 @@ class ScoreDetailPage extends HookConsumerWidget {
                               children: [
                                 const Text('Historical misscount'),
                                 Text(
-                                  scoreViewModel.scores.any((e) => true)
-                                      ? scoreViewModel.scores
-                                          .where((e) => e.misscount != null)
-                                          .map((e) => e.misscount!)
-                                          .reduce(min)
-                                          .toString()
-                                      : '---',
+                                  scoreViewModel
+                                          .historicalMissCountRecord?.misscount
+                                          ?.toString() ??
+                                      '---',
                                   style: const TextStyle(fontSize: 36),
                                 )
                               ],
@@ -118,11 +120,9 @@ class ScoreDetailPage extends HookConsumerWidget {
                               children: [
                                 const Text('Current misscount'),
                                 Text(
-                                  scoreViewModel.scores.any((e) => true)
-                                      ? scoreViewModel.scores.first.misscount
-                                              ?.toString() ??
-                                          '---'
-                                      : '---',
+                                  scoreViewModel.currentRecord?.misscount
+                                          ?.toString() ??
+                                      '---',
                                   style: const TextStyle(fontSize: 36),
                                 )
                               ],
@@ -210,7 +210,7 @@ class ScoreDetailPage extends HookConsumerWidget {
           const Text('2'),
           const Text('3'),
           const Text('4'),
-        ][scoreViewModel.currentIndex],
+        ][pageType.state.index],
       ),
     );
   }
