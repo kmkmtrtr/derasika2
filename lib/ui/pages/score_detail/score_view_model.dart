@@ -1,8 +1,10 @@
 import 'dart:math';
 
 import 'package:derasika2/data/model/chart_detail.dart';
+import 'package:derasika2/data/model/memo.dart';
 import 'package:derasika2/data/model/score_log.dart';
 import 'package:derasika2/data/repository/chart_repository.dart';
+import 'package:derasika2/data/repository/memo_repository.dart';
 import 'package:derasika2/data/repository/score_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,6 +21,7 @@ class ScoreViewModel extends ChangeNotifier {
       _reader(scoreRepositoryProvider);
   late final ChartRepository _chartRepository =
       _reader(chartRepositoryProvider);
+  late final MemoRepository _memoRepository = _reader(memoRepositoryProvider);
 
   int get chartId => _chartId;
   List<ScoreLog>? _scores;
@@ -33,6 +36,8 @@ class ScoreViewModel extends ChangeNotifier {
   ScoreLog? get historicalScoreRecord => _historicalScoreRecord;
   ScoreLog? _historicalMissCountRecord;
   ScoreLog? get historicalMissCountRecord => _historicalMissCountRecord;
+  List<Memo>? _memo;
+  List<Memo> get memo => _memo ?? <Memo>[];
 
   ChartDetail? _chartDetail;
   ChartDetail? get chartDetail => _chartDetail;
@@ -43,12 +48,14 @@ class ScoreViewModel extends ChangeNotifier {
     return Future.wait([
       _scoreRepository.getChartScores(_chartId),
       _chartRepository.getChartDetail(_chartId),
-      _scoreRepository.getCurrentVersionId()
+      _scoreRepository.getCurrentVersionId(),
+      _memoRepository.getMemo(chartId),
     ]).then((value) {
       final scores = value[0] as List<ScoreLog>;
       _scores = scores;
       _chartDetail = value[1] as ChartDetail;
       _versionId = value[2] as int;
+      _memo = value[3] as List<Memo>;
       if (scores.any((e) => e.versionId == (_versionId ?? 0))) {
         _currentRecord =
             scores.firstWhere((e) => e.versionId == (_versionId ?? 0));
@@ -91,5 +98,15 @@ class ScoreViewModel extends ChangeNotifier {
             .firstWhere((e) => e.misscount == minMissCount);
       }
     }).whenComplete(notifyListeners);
+  }
+
+  Future<void> upsertMemo(
+      int? id, DateTime createdAt, String text, String title) async {
+    final memo = Memo(id, createdAt, text, title, chartId);
+    _memoRepository.updateMemo(memo).whenComplete(notifyListeners);
+  }
+
+  Future<void> deleteMemo(int id) async {
+    _memoRepository.deleteMemo(id).whenComplete(notifyListeners);
   }
 }

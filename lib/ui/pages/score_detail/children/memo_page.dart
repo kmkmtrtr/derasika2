@@ -1,7 +1,7 @@
+import 'package:derasika2/ui/pages/score_detail/children/memo_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../score_view_model.dart';
 
 class MemoPage extends HookConsumerWidget {
   const MemoPage({Key? key, required this.chartId}) : super(key: key);
@@ -10,151 +10,54 @@ class MemoPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scoreViewModel = ref.read(scoreViewModelProvider(chartId));
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Card(
-            margin: const EdgeInsets.all(10),
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              width: double.infinity,
-              child: Column(
+    final scrollController = useScrollController();
+    final memoViewModel = ref.watch(memoViewModelProvider(chartId));
+    useFuture(
+        useMemoized(memoViewModel.getMemo, [memoViewModel.memo.toString()]));
+    final textTheme = Theme.of(context).textTheme;
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          // TODO 新規追加ダイアログを開く
+          memoViewModel.upsertMemo(
+              null,
+              DateTime.now(),
+              '''Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis au''',
+              'BPMメモ');
+        },
+      ),
+      body: Scrollbar(
+        controller: scrollController,
+        isAlwaysShown: true,
+        interactive: true,
+        child: ListView.builder(
+          controller: scrollController,
+          scrollDirection: Axis.vertical,
+          itemCount: memoViewModel.memo.length,
+          itemBuilder: (BuildContext context, int index) {
+            final memo = memoViewModel.memo[index];
+            return ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Score Detail',
-                    style: TextStyle(fontSize: 24),
+                  Text(
+                    memo.title,
+                    style: textTheme.headline6,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        children: [
-                          const Text('Historical Score'),
-                          Text(
-                            scoreViewModel.historicalScoreRecord?.score
-                                    .toString() ??
-                                '',
-                            style: const TextStyle(fontSize: 36),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          const Text('Current Score'),
-                          Text(
-                            scoreViewModel.currentRecord?.score.toString() ??
-                                '',
-                            style: const TextStyle(fontSize: 36),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Column(
-                        children: [
-                          const Text('Historical misscount'),
-                          Text(
-                            scoreViewModel.historicalMissCountRecord?.misscount
-                                    ?.toString() ??
-                                '---',
-                            style: const TextStyle(fontSize: 36),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          const Text('Current misscount'),
-                          Text(
-                            scoreViewModel.currentRecord?.misscount
-                                    ?.toString() ??
-                                '---',
-                            style: const TextStyle(fontSize: 36),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                  Text(
+                    '${memo.createdAt}',
+                    style: textTheme.subtitle1,
+                  )
                 ],
               ),
-            ),
-          ),
-          Card(
-            margin: const EdgeInsets.all(10),
-            child: Container(
-              padding: const EdgeInsets.all(5),
-              width: double.infinity,
-              child: Column(
-                children: [
-                  const Text(
-                    'Score Update Detail',
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  FittedBox(
-                    child: DataTable(
-                      columnSpacing: 20,
-                      columns: const [
-                        DataColumn(
-                          label: Text('Version'),
-                        ),
-                        DataColumn(
-                          label: Text('Update\r\nDate'),
-                        ),
-                        DataColumn(
-                          label: Text('Clear\r\nLamp'),
-                        ),
-                        DataColumn(
-                          label: Text('Best\r\nScore'),
-                        ),
-                        DataColumn(
-                          label: Text('Score\r\nPace'),
-                        ),
-                        DataColumn(
-                          label: Text('Miss\r\nCount'),
-                        ),
-                      ],
-                      rows: scoreViewModel.scores
-                          .map(
-                            (e) => DataRow(
-                              cells: [
-                                DataCell(Text(e.version
-                                    .toString()
-                                    .replaceAll(' ', '\r\n'))),
-                                DataCell(Text(e.updatedAt)),
-                                DataCell(Text(e.clearType
-                                    .toString()
-                                    .replaceAll(' CLEAR', '\r\nCLEAR'))),
-                                DataCell(Container(
-                                  child: Text(e.score.toString()),
-                                  alignment: Alignment.centerRight,
-                                )),
-                                DataCell(Container(
-                                  child: Text(
-                                      '${e.scorePace}\r\n${e.nextScorePace}'),
-                                  alignment: Alignment.center,
-                                )),
-                                DataCell(
-                                  Container(
-                                    child:
-                                        Text(e.misscount?.toString() ?? '---'),
-                                    alignment: Alignment.centerRight,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
+              subtitle: Text(memo.text, style: textTheme.bodyText1),
+              onTap: () {
+                memoViewModel.deleteMemo(memo.id ?? 0);
+              },
+            );
+          },
+        ),
       ),
     );
   }
