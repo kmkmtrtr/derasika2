@@ -7,19 +7,20 @@ import 'package:derasika2/data/repository/score_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final scoreViewModelProvider =
-    ChangeNotifierProvider.autoDispose((ref) => ScoreViewModel(ref.read));
+final scoreViewModelProvider = ChangeNotifierProvider.autoDispose
+    .family((ref, int chartId) => ScoreViewModel(ref.read, chartId));
 
 class ScoreViewModel extends ChangeNotifier {
-  ScoreViewModel(this._reader);
+  ScoreViewModel(this._reader, this._chartId);
 
   final Reader _reader;
+  final int _chartId;
   late final ScoreRepository _scoreRepository =
       _reader(scoreRepositoryProvider);
   late final ChartRepository _chartRepository =
       _reader(chartRepositoryProvider);
 
-  int? _chartId;
+  int get chartId => _chartId;
   List<ScoreLog>? _scores;
   List<ScoreLog> get scores => _scores ?? <ScoreLog>[];
   ScoreLog? _currentRecord;
@@ -40,8 +41,8 @@ class ScoreViewModel extends ChangeNotifier {
 
   Future<void> getChartDetail() {
     return Future.wait([
-      _scoreRepository.getChartScores(_chartId ?? 1),
-      _chartRepository.getChartDetail(_chartId ?? 1),
+      _scoreRepository.getChartScores(_chartId),
+      _chartRepository.getChartDetail(_chartId),
       _scoreRepository.getCurrentVersionId()
     ]).then((value) {
       final scores = value[0] as List<ScoreLog>;
@@ -58,9 +59,13 @@ class ScoreViewModel extends ChangeNotifier {
             .map((e) => e.score)
             .reduce(max);
         final minMissCount = scores
-            .where((e) => e.versionId == (_versionId ?? 0) - 1)
-            .map((e) => e.misscount ?? 9999)
-            .reduce(min);
+                .where((e) => e.versionId == (_versionId ?? 0) - 1)
+                .any((e) => e.misscount != null)
+            ? scores
+                .where((e) => e.versionId == (_versionId ?? 0) - 1)
+                .map((e) => e.misscount ?? 9999)
+                .reduce(min)
+            : null;
         _prevScoreRecord = scores.firstWhere((e) => e.score == maxScore);
         _prevMissCountRecord =
             scores.firstWhere((e) => e.misscount == minMissCount);
@@ -71,9 +76,13 @@ class ScoreViewModel extends ChangeNotifier {
             .map((e) => e.score)
             .reduce(max);
         final minMissCount = scores
-            .where((e) => e.versionId < (_versionId ?? 0))
-            .map((e) => e.misscount ?? 9999)
-            .reduce(min);
+                .where((e) => e.versionId < (_versionId ?? 0))
+                .any((e) => e.misscount != null)
+            ? scores
+                .where((e) => e.versionId < (_versionId ?? 0))
+                .map((e) => e.misscount ?? 9999)
+                .reduce(min)
+            : null;
         _historicalScoreRecord = scores
             .where((e) => e.versionId < (_versionId ?? 0))
             .firstWhere((e) => e.score == maxScore);
@@ -82,9 +91,5 @@ class ScoreViewModel extends ChangeNotifier {
             .firstWhere((e) => e.misscount == minMissCount);
       }
     }).whenComplete(notifyListeners);
-  }
-
-  void setChartId(int chartId) {
-    _chartId = chartId;
   }
 }

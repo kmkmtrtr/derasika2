@@ -1,20 +1,11 @@
 import 'package:auto_route/annotations.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
 import 'package:derasika2/ui/pages/score_detail/score_view_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:derasika2/ui/route/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-final scoreDetailPageProvider = StateProvider.autoDispose<ScoreDetailPageType>(
-    (ref) => ScoreDetailPageType.score);
-
-enum ScoreDetailPageType {
-  score,
-  chart,
-  memo,
-  info,
-}
+import 'package:auto_route/auto_route.dart';
 
 class ScoreDetailPage extends HookConsumerWidget {
   const ScoreDetailPage({Key? key, @PathParam('id') required this.chartId})
@@ -24,9 +15,7 @@ class ScoreDetailPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageType = ref.watch(scoreDetailPageProvider);
-    final scoreViewModel = ref.watch(scoreViewModelProvider);
-    scoreViewModel.setChartId(chartId);
+    final scoreViewModel = ref.watch(scoreViewModelProvider(chartId));
     final snapshot =
         useFuture(useMemoized(scoreViewModel.getChartDetail, [chartId]));
     final chartDetail = scoreViewModel.chartDetail;
@@ -42,175 +31,33 @@ class ScoreDetailPage extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.table_chart), label: 'score'),
-          BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'chart'),
-          BottomNavigationBarItem(icon: Icon(Icons.note), label: 'memo'),
-          BottomNavigationBarItem(icon: Icon(Icons.info), label: 'info'),
-        ],
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
-        currentIndex: pageType.state.index,
-        onTap: (index) => pageType.state = ScoreDetailPageType.values[index],
-      ),
       body: LoadingContainer(
         isLoaded: snapshot.connectionState == ConnectionState.done,
-        child: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Card(
-                  margin: const EdgeInsets.all(10),
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        const Text(
-                          'Score Detail',
-                          style: TextStyle(fontSize: 24),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                const Text('Historical Score'),
-                                Text(
-                                  scoreViewModel.historicalScoreRecord?.score
-                                          .toString() ??
-                                      '',
-                                  style: const TextStyle(fontSize: 36),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                const Text('Current Score'),
-                                Text(
-                                  scoreViewModel.currentRecord?.score
-                                          .toString() ??
-                                      '',
-                                  style: const TextStyle(fontSize: 36),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                const Text('Historical misscount'),
-                                Text(
-                                  scoreViewModel
-                                          .historicalMissCountRecord?.misscount
-                                          ?.toString() ??
-                                      '---',
-                                  style: const TextStyle(fontSize: 36),
-                                )
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                const Text('Current misscount'),
-                                Text(
-                                  scoreViewModel.currentRecord?.misscount
-                                          ?.toString() ??
-                                      '---',
-                                  style: const TextStyle(fontSize: 36),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  margin: const EdgeInsets.all(10),
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        const Text(
-                          'Score Update Detail',
-                          style: TextStyle(fontSize: 24),
-                        ),
-                        FittedBox(
-                          child: DataTable(
-                            columnSpacing: 20,
-                            columns: const [
-                              DataColumn(
-                                label: Text('Version'),
-                              ),
-                              DataColumn(
-                                label: Text('Update\r\nDate'),
-                              ),
-                              DataColumn(
-                                label: Text('Clear\r\nLamp'),
-                              ),
-                              DataColumn(
-                                label: Text('Best\r\nScore'),
-                              ),
-                              DataColumn(
-                                label: Text('Score\r\nPace'),
-                              ),
-                              DataColumn(
-                                label: Text('Miss\r\nCount'),
-                              ),
-                            ],
-                            rows: scoreViewModel.scores
-                                .map(
-                                  (e) => DataRow(
-                                    cells: [
-                                      DataCell(Text(e.version
-                                          .toString()
-                                          .replaceAll(' ', '\r\n'))),
-                                      DataCell(Text(e.updatedAt)),
-                                      DataCell(Text(e.clearType
-                                          .toString()
-                                          .replaceAll(' CLEAR', '\r\nCLEAR'))),
-                                      DataCell(Container(
-                                        child: Text(e.score.toString()),
-                                        alignment: Alignment.centerRight,
-                                      )),
-                                      DataCell(Container(
-                                        child: Text(
-                                            '${e.scorePace}\r\n${e.nextScorePace}'),
-                                        alignment: Alignment.center,
-                                      )),
-                                      DataCell(
-                                        Container(
-                                          child: Text(
-                                              e.misscount?.toString() ?? '---'),
-                                          alignment: Alignment.centerRight,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
+        child: AutoTabsScaffold(
+          routes: [
+            ScoreRoute(chartId: chartId),
+            ChartRoute(chartId: chartId),
+            MemoRoute(chartId: chartId),
+            InfoRoute(chartId: chartId),
+          ],
+          bottomNavigationBuilder: (_, tabsRouter) {
+            return BottomNavigationBar(
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.table_chart), label: 'score'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.bar_chart), label: 'chart'),
+                BottomNavigationBarItem(icon: Icon(Icons.note), label: 'memo'),
+                BottomNavigationBarItem(icon: Icon(Icons.info), label: 'info'),
               ],
-            ),
-          ),
-          const Text('2'),
-          const Text('3'),
-          const Text('4'),
-        ][pageType.state.index],
+              selectedItemColor: Colors.blue,
+              unselectedItemColor: Colors.grey,
+              showUnselectedLabels: true,
+              currentIndex: tabsRouter.activeIndex,
+              onTap: tabsRouter.setActiveIndex,
+            );
+          },
+        ),
       ),
     );
   }
