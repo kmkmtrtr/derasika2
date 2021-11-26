@@ -104,26 +104,30 @@ class HomePage extends HookConsumerWidget {
           IconButton(icon: const Icon(Icons.sort), onPressed: () {}),
           IconButton(icon: const Icon(Icons.filter_alt), onPressed: () {}),
         ],
-        // actions: <Widget>[
-        // CsvDownloadButton(model),
-        // SortButton(model),
-        // SearchButton(scoreDataListModel),
-        // ],
       ),
-      body: Center(
-        child: LoadingContainer(
-          isLoaded: snapshot.connectionState == ConnectionState.done,
-          child: Scrollbar(
-            controller: _scrollController,
-            isAlwaysShown: true,
-            interactive: true,
-            child: ListView.builder(
+      body: Listener(
+        onPointerDown: (_) {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus &&
+              currentFocus.focusedChild != null) {
+            currentFocus.focusedChild?.unfocus();
+          }
+        },
+        child: Center(
+          child: LoadingContainer(
+            isLoaded: snapshot.connectionState == ConnectionState.done,
+            child: Scrollbar(
               controller: _scrollController,
-              scrollDirection: Axis.vertical,
-              itemCount: scoreList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ScoreTile(record: scoreList[index]);
-              },
+              isAlwaysShown: true,
+              interactive: true,
+              child: ListView.builder(
+                controller: _scrollController,
+                scrollDirection: Axis.vertical,
+                itemCount: scoreList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ScoreTile(record: scoreList[index]);
+                },
+              ),
             ),
           ),
         ),
