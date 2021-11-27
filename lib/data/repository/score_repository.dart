@@ -3,6 +3,7 @@ import 'package:derasika2/data/model/csv/csv_since_heroic_verse.dart';
 import 'package:derasika2/data/model/csv/csv_until_rootage.dart';
 import 'package:derasika2/data/model/play_mode.dart';
 import 'package:derasika2/data/model/score_data.dart';
+import 'package:derasika2/data/model/score_log.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final scoreRepositoryProvider = Provider((ref) => ScoreRepository(ref.read));
@@ -15,9 +16,13 @@ class ScoreRepository {
       _reader(scoreDataSourceProvider);
 
   Future<List<ScoreData>> getVersionScores(int version, String? where,
-      List<Object?>? whereArgs, String orderBy, PlayMode playMode) async {
-    return await _scoreDataSource.fetchVersionScores(
+      List<Object?>? whereArgs, String orderBy, PlayMode playMode) {
+    return _scoreDataSource.fetchVersionScores(
         version, where, whereArgs, orderBy, playMode);
+  }
+
+  Future<List<ScoreLog>> getChartScores(int chartId) {
+    return _scoreDataSource.fetchChartScores(chartId);
   }
 
   Future<List<ScoreData>> getCurrentVersionScores(String? where,

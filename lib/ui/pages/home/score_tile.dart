@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:derasika2/data/model/score_data.dart';
+import 'package:derasika2/ui/route/app_route.dart';
 import 'package:flutter/material.dart';
 
 class ScoreTile extends StatelessWidget {
@@ -246,12 +248,8 @@ class ScoreTile extends StatelessWidget {
         ),
         title: titleRow,
         subtitle: subTitleRow,
-        // onTap: () {
-        //   Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (BuildContext context) => ScoreDetail(record),
-        //     fullscreenDialog: true,
-        //   ));
-        // },
+        onTap: () =>
+            context.pushRoute(ScoreDetailRoute(chartId: record.chartId)),
       ),
       decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: Colors.black12))),

@@ -3,6 +3,7 @@ import 'package:derasika2/data/model/csv/csv_since_heroic_verse.dart';
 import 'package:derasika2/data/model/csv/csv_until_rootage.dart';
 import 'package:derasika2/data/model/play_mode.dart';
 import 'package:derasika2/data/model/score_data.dart';
+import 'package:derasika2/data/model/score_log.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -46,6 +47,35 @@ class ScoreDataSource {
             int.tryParse(e['misscount'].toString()),
             int.tryParse(e['prev_misscount']?.toString() ?? ''),
             int.tryParse(e['best_misscount']?.toString() ?? ''),
+          ),
+        )
+        .toList();
+  }
+
+  Future<List<ScoreLog>> fetchChartScores(int chartId) async {
+    final db = await _appDb.connection;
+    final data = await db.query(
+      'score_log_view',
+      where: 'chart_id=?',
+      whereArgs: [chartId],
+      orderBy: 'updated_at desc',
+    );
+    return data
+        .map(
+          (e) => ScoreLog(
+            e['score'] as int,
+            e['clear_type_id'] as int,
+            e['clear_type'] as String,
+            e['djlevel_type_id'] as int,
+            e['djlevel_type'] as String,
+            e['score_pace'] as String,
+            e['next_score_pace'] as String,
+            e['score_rate'] as double,
+            e['djpoint'] as double,
+            int.tryParse(e['misscount']?.toString() ?? ''),
+            e['version_id'] as int,
+            e['version'] as String,
+            e['updated_at'] as String,
           ),
         )
         .toList();
