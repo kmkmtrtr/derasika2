@@ -2,6 +2,7 @@ export 'app_route.gr.dart';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:derasika2/ui/pages/home/home_page.dart';
+import 'package:derasika2/ui/pages/play_log/play_log_page.dart';
 import 'package:derasika2/ui/pages/score_detail/children/chart_page.dart';
 import 'package:derasika2/ui/pages/score_detail/children/info_page.dart';
 import 'package:derasika2/ui/pages/score_detail/children/memo_page.dart';
@@ -31,6 +32,10 @@ import 'package:derasika2/ui/pages/webview/csv_import_webview.dart';
       path: '/csvImportWebView',
       page: CsvImportWebViewPage,
       fullscreenDialog: true,
+    ),
+    AutoRoute(
+      path: '/playLogs',
+      page: PlayLogPage,
     ),
   ],
 )

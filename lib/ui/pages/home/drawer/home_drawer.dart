@@ -1,12 +1,14 @@
 import 'dart:io';
+import 'package:auto_route/auto_route.dart';
 import 'package:derasika2/data/model/enum/play_mode.dart';
 import 'package:derasika2/ui/pages/home/home_view_model.dart';
+import 'package:derasika2/ui/route/app_route.gr.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 import 'package:share_plus/share_plus.dart';
 
 class HomeDrawer extends HookConsumerWidget {
@@ -23,7 +25,13 @@ class HomeDrawer extends HookConsumerWidget {
           Expanded(
             child: ListView(
               children: <Widget>[
-                _getMenuItem(context, Icons.history, '更新履歴', '/updatelog'),
+                ListTile(
+                  leading: const Icon(Icons.history),
+                  title: const Text('更新履歴'),
+                  onTap: () {
+                    context.pushRoute(const PlayLogRoute());
+                  },
+                ),
                 _getMenuItem(context, Icons.grade, 'SP12地力表', '/sp12tier'),
                 ListTile(
                   leading: const Icon(Icons.file_download),
