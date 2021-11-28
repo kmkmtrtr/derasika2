@@ -1,4 +1,4 @@
-import 'package:derasika2/data/model/play_mode.dart';
+import 'package:derasika2/data/model/enum/play_mode.dart';
 import 'package:derasika2/data/model/score_data.dart';
 import 'package:derasika2/data/repository/score_repository.dart';
 import 'package:flutter/foundation.dart';

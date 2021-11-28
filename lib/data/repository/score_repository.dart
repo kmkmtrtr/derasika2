@@ -1,7 +1,7 @@
 import 'package:derasika2/data/db/score_data_source.dart';
 import 'package:derasika2/data/model/csv/csv_since_heroic_verse.dart';
 import 'package:derasika2/data/model/csv/csv_until_rootage.dart';
-import 'package:derasika2/data/model/play_mode.dart';
+import 'package:derasika2/data/model/enum/play_mode.dart';
 import 'package:derasika2/data/model/score_data.dart';
 import 'package:derasika2/data/model/score_log.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

@@ -9,7 +9,7 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:derasika2/data/model/play_mode.dart' as _i10;
+import 'package:derasika2/data/model/enum/play_mode.dart' as _i10;
 import 'package:derasika2/ui/pages/home/home_page.dart' as _i1;
 import 'package:derasika2/ui/pages/score_detail/children/chart_page.dart'
     as _i5;

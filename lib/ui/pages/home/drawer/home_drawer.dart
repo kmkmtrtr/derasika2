@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:derasika2/data/model/play_mode.dart';
+import 'package:derasika2/data/model/enum/play_mode.dart';
 import 'package:derasika2/ui/pages/home/home_view_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
