@@ -1,7 +1,8 @@
 import 'package:derasika2/data/db/app_db.dart';
-import 'package:derasika2/data/model/chart_detail.dart';
+import 'package:derasika2/data/model/daily_play_log.dart';
 import 'package:derasika2/data/model/play_log.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 
 final playLogDataSourceProvider =
     Provider((ref) => PlayLogDataSource(ref.read));
@@ -18,13 +19,13 @@ class PlayLogDataSource {
     return data.map((e) => PlayLog.fromJson(e)).toList();
   }
 
-  Future<ChartDetail> fetchDailyPlayLogs(int chartId) async {
+  Future<List<DailyPlayLog>> fetchDailyPlayLogs(DateTime updateDate) async {
     final db = await _appDb.connection;
     final data = await db.query(
-      '',
-      where: 'id=?',
-      whereArgs: [chartId],
+      'play_log_detail_view',
+      where: 'updated_at=?',
+      whereArgs: [DateFormat('yyyy-MM-dd').format(updateDate)],
     );
-    return ChartDetail.fromJson(data.first);
+    return data.map((e) => DailyPlayLog.fromJson(e)).toList();
   }
 }

@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
 import 'package:derasika2/ui/pages/play_log/play_log_view_model.dart';
+import 'package:derasika2/ui/route/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -37,16 +39,8 @@ class PlayLogPage extends HookConsumerWidget {
                       '${playLog.version}\r\n${DateFormat('yyyy年MM月dd日').format(playLog.updatedAt)}'),
                   subtitle: Text('更新件数：${playLog.number}件'),
                   onTap: () async {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (BuildContext context) {
-                    //           return UpdateDetail({
-                    //             'version_id': future.data[index]['version_id'],
-                    //             'updated_at': future.data[index]['updated_at']
-                    //           });
-                    //         },
-                    //         fullscreenDialog: true));
+                    context.pushRoute(DailyPlayLogRoute(
+                        dateString: playLog.updatedAt.toString()));
                   },
                 ),
                 decoration: const BoxDecoration(

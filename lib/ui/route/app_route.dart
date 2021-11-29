@@ -1,6 +1,9 @@
 export 'app_route.gr.dart';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:derasika2/ui/pages/daily_play_log/daily_play_log_page.dart';
+import 'package:derasika2/ui/pages/daily_play_log/play_detail_page.dart';
+import 'package:derasika2/ui/pages/daily_play_log/play_summary_page.dart';
 import 'package:derasika2/ui/pages/home/home_page.dart';
 import 'package:derasika2/ui/pages/play_log/play_log_page.dart';
 import 'package:derasika2/ui/pages/score_detail/children/chart_page.dart';
@@ -37,6 +40,15 @@ import 'package:derasika2/ui/pages/webview/csv_import_webview.dart';
       path: '/playLogs',
       page: PlayLogPage,
     ),
+    AutoRoute(
+        path: '/playLogs/:date',
+        page: DailyPlayLogPage,
+        fullscreenDialog: true,
+        children: [
+          AutoRoute(path: 'summary', page: PlaySummaryPage),
+          AutoRoute(path: 'chart', page: PlayDetailPage),
+          RedirectRoute(path: '*', redirectTo: ''),
+        ]),
   ],
 )
 class $AppRouter {}
