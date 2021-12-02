@@ -14,6 +14,11 @@ class PlaySummaryPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final themeData = Theme.of(context);
+    getColor(int level) {
+      return themeData.primaryColorDark.withAlpha(21 * level);
+    }
+
     final dailyPlayLogViewModel =
         ref.watch(dailyPlayLogViewModelProvider(dateString));
     final _ = useFuture(useMemoized(dailyPlayLogViewModel.getDialyPlayLogs,
@@ -26,11 +31,11 @@ class PlaySummaryPage extends HookConsumerWidget {
         .map(
           (e) => PieChartSectionData(
             value: e.value.length.toDouble(),
-            title: e.value.length / dailyPlayLogs.length > 0.1
-                ? '☆${e.key}\r\n(${e.value.length}件)'
-                : '',
+            title:
+                e.value.length / dailyPlayLogs.length > 0.04 ? '☆${e.key}' : '',
+            titleStyle: themeData.textTheme.subtitle2,
             radius: 100,
-            titlePositionPercentageOffset: 1.2,
+            titlePositionPercentageOffset: 1.15,
             color: getColor(e.key),
           ),
         )
@@ -78,37 +83,6 @@ class PlaySummaryPage extends HookConsumerWidget {
         ),
       ),
     );
-  }
-
-  MaterialColor getColor(int level) {
-    switch (level) {
-      case 1:
-        return Colors.amber;
-      case 2:
-        return Colors.blue;
-      case 3:
-        return Colors.blueGrey;
-      case 4:
-        return Colors.brown;
-      case 5:
-        return Colors.cyan;
-      case 6:
-        return Colors.deepOrange;
-      case 7:
-        return Colors.deepPurple;
-      case 8:
-        return Colors.green;
-      case 9:
-        return Colors.indigo;
-      case 10:
-        return Colors.lightBlue;
-      case 11:
-        return Colors.lightGreen;
-      case 12:
-        return Colors.lime;
-      default:
-        return Colors.grey;
-    }
   }
 }
 
