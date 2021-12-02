@@ -19,45 +19,43 @@ class ScoreDetailPage extends HookConsumerWidget {
     final snapshot =
         useFuture(useMemoized(scoreViewModel.getChartDetail, [chartId]));
     final chartDetail = scoreViewModel.chartDetail;
-    return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          children: [
-            Text(chartDetail?.title ?? ''),
-            Text(chartDetail != null
-                ? '${chartDetail.difficulty} ☆${chartDetail.level}'
-                : ''),
-          ],
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return LoadingContainer(
+      isLoaded: snapshot.connectionState == ConnectionState.done,
+      child: AutoTabsScaffold(
+        appBarBuilder: (context, tabsRouter) => AppBar(
+          title: Column(
+            children: [
+              Text(chartDetail?.title ?? ''),
+              Text(chartDetail != null
+                  ? '${chartDetail.difficulty} ☆${chartDetail.level}'
+                  : ''),
+            ],
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+          ),
         ),
-      ),
-      body: LoadingContainer(
-        isLoaded: snapshot.connectionState == ConnectionState.done,
-        child: AutoTabsScaffold(
-          routes: [
-            ScoreRoute(chartId: chartId),
-            ChartRoute(chartId: chartId),
-            MemoRoute(chartId: chartId),
-            InfoRoute(chartId: chartId),
-          ],
-          bottomNavigationBuilder: (_, tabsRouter) {
-            return BottomNavigationBar(
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.table_chart), label: 'score'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.bar_chart), label: 'chart'),
-                BottomNavigationBarItem(icon: Icon(Icons.note), label: 'memo'),
-                BottomNavigationBarItem(icon: Icon(Icons.info), label: 'info'),
-              ],
-              selectedItemColor: Colors.blue,
-              unselectedItemColor: Colors.grey,
-              showUnselectedLabels: true,
-              currentIndex: tabsRouter.activeIndex,
-              onTap: tabsRouter.setActiveIndex,
-            );
-          },
-        ),
+        routes: [
+          ScoreRoute(chartId: chartId),
+          ChartRoute(chartId: chartId),
+          MemoRoute(chartId: chartId),
+          InfoRoute(chartId: chartId),
+        ],
+        bottomNavigationBuilder: (_, tabsRouter) {
+          return BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.table_chart), label: 'score'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.bar_chart), label: 'chart'),
+              BottomNavigationBarItem(icon: Icon(Icons.note), label: 'memo'),
+              BottomNavigationBarItem(icon: Icon(Icons.info), label: 'info'),
+            ],
+            selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.grey,
+            showUnselectedLabels: true,
+            currentIndex: tabsRouter.activeIndex,
+            onTap: tabsRouter.setActiveIndex,
+          );
+        },
       ),
     );
   }
