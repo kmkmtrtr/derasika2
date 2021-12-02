@@ -1,0 +1,18 @@
+enum PlayLogOrder {
+  songTitleAsc,
+  songTitleDesc,
+  levelAsc,
+  levelDesc,
+  scoreAsc,
+  scoreDesc,
+  scoreDiffAsc,
+  scoreDiffDesc,
+  misscountAsc,
+  misscountDesc,
+  misscountDiffAsc,
+  misscountDiffDesc,
+  clearTypeAsc,
+  clearTypeDesc,
+  clearTypeDiffAsc,
+  clearTypeDiffDesc,
+}

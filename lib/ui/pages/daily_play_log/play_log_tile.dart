@@ -18,8 +18,7 @@ class PlayLogTile extends StatelessWidget {
     final difficultyColor = getDifficultyColor(record.difficulty);
     final scoreUpdated = (record.score - record.beforeScore) > 0;
     final misscountUpdated =
-        ((record.beforeMisscount ?? 9999) - (record.beforeMisscount ?? 9999)) >
-            0;
+        ((record.beforeMisscount ?? 0) - (record.misscount ?? 0)) > 0;
     final djLevelUpdated =
         record.djlevelTypeId - record.beforeDjlevelTypeId > 0;
     final clearUpdated = record.clearTypeId - record.beforeClearTypeId > 0;
@@ -114,7 +113,7 @@ class PlayLogTile extends StatelessWidget {
                     child: FittedBox(
                         child: misscountUpdated
                             ? Text(
-                                '${record.misscount ?? '---'} (${record.beforeMisscount ?? 0}) ',
+                                '${record.misscount ?? '---'} (${(record.misscount ?? 0) - (record.beforeMisscount ?? 0)}) ',
                               )
                             : Text(
                                 '${record.misscount ?? '---'} ',
@@ -155,7 +154,8 @@ class PlayLogTile extends StatelessWidget {
                                 )
                               ],
                             ),
-                            Text('${record.scoreRate.toStringAsFixed(2)}%'),
+                            Text(
+                                '${record.beforeScoreRate.toStringAsFixed(2)}% → ${record.scoreRate.toStringAsFixed(2)}%'),
                           ]
                         : [
                             Text(
@@ -165,7 +165,11 @@ class PlayLogTile extends StatelessWidget {
                                   color: getDjlevelColor(record.djlevelType),
                                   fontWeight: FontWeight.w700),
                             ),
-                            Text('${record.scoreRate.toStringAsFixed(2)}%'),
+                            scoreUpdated && record.beforeScore != 0
+                                ? Text(
+                                    '${record.beforeScoreRate.toStringAsFixed(2)}% → ${record.scoreRate.toStringAsFixed(2)}%')
+                                : Text(
+                                    '${record.scoreRate.toStringAsFixed(2)}%'),
                           ],
                   ),
                   fit: BoxFit.contain,
