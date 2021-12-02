@@ -8,12 +8,11 @@ class ScoreTile extends StatelessWidget {
 
   final ScoreData record;
   static const titleRowHeight = 23.0;
-  static const titleFontSize = 32.0;
   static const rowHeight = 15.8;
-  static const fontSize = 20.0;
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final difficultyColor = getDifficultyColor(record.difficulty);
     final score = record.score;
     final djLevelColor = getDjlevelColor(record.djLevel);
@@ -47,8 +46,7 @@ class ScoreTile extends StatelessWidget {
       child: FittedBox(
         child: Text(
           '${record.title}　',
-          style: const TextStyle(
-              fontSize: titleFontSize, fontWeight: FontWeight.w400),
+          style: const TextStyle(fontWeight: FontWeight.w400),
         ),
         fit: BoxFit.contain,
         alignment: Alignment.topLeft,
@@ -61,10 +59,8 @@ class ScoreTile extends StatelessWidget {
           child: FittedBox(
             child: Text(
               '${record.clearType} ',
-              style: TextStyle(
-                  color: clearTypeColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: fontSize),
+              style:
+                  TextStyle(color: clearTypeColor, fontWeight: FontWeight.w600),
             ),
             fit: BoxFit.contain,
           ),
@@ -80,8 +76,7 @@ class ScoreTile extends StatelessWidget {
                     height: rowHeight,
                     child: FittedBox(
                       child: Text('EX SCORE ',
-                          style: TextStyle(
-                              color: Colors.black87, fontSize: fontSize)),
+                          style: TextStyle(color: Colors.black87)),
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -90,7 +85,6 @@ class ScoreTile extends StatelessWidget {
                     child: FittedBox(
                         child: Text(
                           '$score (${record.scoreRate}%) ',
-                          style: const TextStyle(fontSize: fontSize),
                         ),
                         fit: BoxFit.contain),
                   ),
@@ -102,7 +96,6 @@ class ScoreTile extends StatelessWidget {
                           child: FittedBox(
                               child: Text(
                                 '$prevScoreSub ',
-                                style: const TextStyle(fontSize: fontSize),
                               ),
                               fit: BoxFit.contain),
                           alignment: Alignment.centerLeft,
@@ -114,7 +107,6 @@ class ScoreTile extends StatelessWidget {
                           child: FittedBox(
                             child: Text(
                               '$bestScoreSub ',
-                              style: const TextStyle(fontSize: fontSize),
                             ),
                             fit: BoxFit.contain,
                           ),
@@ -136,8 +128,6 @@ class ScoreTile extends StatelessWidget {
                     child: FittedBox(
                       child: Text(
                         'MISS COUNT ',
-                        style: TextStyle(
-                            color: Colors.black87, fontSize: fontSize),
                       ),
                       fit: BoxFit.contain,
                     ),
@@ -147,7 +137,6 @@ class ScoreTile extends StatelessWidget {
                     child: FittedBox(
                         child: Text(
                           '${record.misscount ?? '---'} ',
-                          style: const TextStyle(fontSize: fontSize),
                         ),
                         fit: BoxFit.contain),
                   ),
@@ -159,7 +148,6 @@ class ScoreTile extends StatelessWidget {
                             child: FittedBox(
                               child: Text(
                                 '$prevMisscountSub ',
-                                style: const TextStyle(fontSize: fontSize),
                               ),
                               fit: BoxFit.contain,
                             ),
@@ -171,7 +159,6 @@ class ScoreTile extends StatelessWidget {
                             child: FittedBox(
                               child: Text(
                                 '$bestMisscountSub ',
-                                style: const TextStyle(fontSize: fontSize),
                               ),
                               fit: BoxFit.contain,
                             ),
@@ -207,21 +194,86 @@ class ScoreTile extends StatelessWidget {
             ),
           ],
         ),
-        Row(
-          children: <Widget>[
-            Expanded(
-              flex: record.scoreRate.round(),
-              child: Container(
-                height: 4,
-                color: Colors.lime,
-              ),
+        Stack(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  flex: (record.scoreRate * 100).round(),
+                  child: Container(
+                    height: 9,
+                    color: Colors.lightGreen,
+                  ),
+                ),
+                Expanded(
+                  flex: (10000 - (record.scoreRate * 100).round()),
+                  child: Container(
+                    height: 9,
+                    color: Colors.grey.shade700,
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: (100 - record.scoreRate).round(),
-              child: Container(
-                height: 4,
-                color: Colors.grey,
-              ),
+            Row(
+              children: [
+                Expanded(
+                  flex: (66.66 * 100).round(),
+                  child: Container(
+                    height: 9,
+                  ),
+                ),
+                Expanded(
+                  flex: (11.11 * 100).round(),
+                  child: Container(
+                    height: 9,
+                    decoration: const BoxDecoration(
+                        border:
+                            Border(left: BorderSide(color: Colors.white70))),
+                    alignment: Alignment.center,
+                    child: FittedBox(
+                      child: Text(
+                        'A',
+                        style: textTheme.overline?.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: (11.11 * 100).round(),
+                  child: Container(
+                    height: 9,
+                    decoration: const BoxDecoration(
+                        border:
+                            Border(left: BorderSide(color: Colors.white70))),
+                    alignment: Alignment.center,
+                    child: FittedBox(
+                      child: Text(
+                        'AA',
+                        style: textTheme.overline?.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: (11.11 * 100).round(),
+                  child: Container(
+                    height: 9,
+                    decoration: const BoxDecoration(
+                        border:
+                            Border(left: BorderSide(color: Colors.white70))),
+                    alignment: Alignment.center,
+                    child: FittedBox(
+                      child: Text(
+                        'AAA',
+                        style: textTheme.overline?.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
