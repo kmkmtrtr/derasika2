@@ -10,12 +10,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomePage extends HookConsumerWidget {
-  HomePage({Key? key}) : super(key: key);
-  final _scrollController = ScrollController();
-  final _textFieldController = TextEditingController();
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scrollController = useScrollController();
+    final textFieldController = useTextEditingController();
     final homeViewModel = ref.watch(homeViewModelProvider);
     final snapshot = useFuture(useMemoized(homeViewModel.fetchScores, [
       homeViewModel.where,
@@ -29,17 +29,17 @@ class HomePage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
-          controller: _textFieldController,
+          controller: textFieldController,
           decoration: InputDecoration(
             icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),
-            suffixIcon: _textFieldController.text != ''
+            suffixIcon: textFieldController.text != ''
                 ? IconButton(
                     onPressed: () {
-                      _scrollController.jumpTo(0);
-                      _textFieldController.clear();
+                      scrollController.jumpTo(0);
+                      textFieldController.clear();
                       ref.watch(homeViewModelProvider).changeFilterQuery('');
                     },
                     icon: const Icon(Icons.clear),
@@ -51,7 +51,7 @@ class HomePage extends HookConsumerWidget {
           ),
           style: const TextStyle(color: Colors.white),
           onChanged: (s) {
-            _scrollController.jumpTo(0);
+            scrollController.jumpTo(0);
             ref.watch(homeViewModelProvider).changeFilterQuery(s);
           },
         ),
@@ -117,11 +117,11 @@ class HomePage extends HookConsumerWidget {
           child: LoadingContainer(
             isLoaded: snapshot.connectionState == ConnectionState.done,
             child: Scrollbar(
-              controller: _scrollController,
+              controller: scrollController,
               isAlwaysShown: true,
               interactive: true,
               child: ListView.builder(
-                controller: _scrollController,
+                controller: scrollController,
                 scrollDirection: Axis.vertical,
                 itemCount: scoreList.length,
                 itemBuilder: (BuildContext context, int index) {
