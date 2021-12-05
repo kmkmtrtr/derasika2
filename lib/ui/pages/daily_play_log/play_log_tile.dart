@@ -1,46 +1,28 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:derasika2/data/model/score_data.dart';
+import 'package:derasika2/data/model/daily_play_log.dart';
 import 'package:derasika2/ui/route/app_route.dart';
 import 'package:flutter/material.dart';
 
-class ScoreTile extends StatelessWidget {
-  const ScoreTile({Key? key, required this.record}) : super(key: key);
+class PlayLogTile extends StatelessWidget {
+  const PlayLogTile({Key? key, required this.record}) : super(key: key);
 
-  final ScoreData record;
+  final DailyPlayLog record;
   static const titleRowHeight = 23.0;
+  static const titleFontSize = 32.0;
   static const rowHeight = 15.8;
+  static const fontSize = 20.0;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final difficultyColor = getDifficultyColor(record.difficulty);
-    final score = record.score;
-    final djLevelColor = getDjlevelColor(record.djLevel);
-    final prevScore = record.prevScore ?? 0;
-    final prevScoreSub = prevScore == 0
-        ? ' '
-        : score - prevScore >= 0
-            ? '前作+${score - prevScore}'
-            : '前作${score - prevScore}';
-    final bestScore = record.bestScore ?? 0;
-    final bestScoreSub = bestScore == 0
-        ? ' '
-        : score - bestScore >= 0
-            ? '歴代+${score - bestScore}'
-            : '歴代${score - bestScore}';
-    final clearTypeColor = getClearTypeColor(record.clearType);
-    final prevMisscountSub =
-        record.misscount == null || record.prevMisscount == null
-            ? ' '
-            : record.misscount! - record.prevMisscount! >= 0
-                ? '前作+${record.misscount! - record.prevMisscount!}'
-                : '前作${record.misscount! - record.prevMisscount!}';
-    final bestMisscountSub =
-        record.misscount == null || record.bestMisscount == null
-            ? ' '
-            : record.misscount! - record.bestMisscount! >= 0
-                ? '歴代+${record.misscount! - record.bestMisscount!}'
-                : '歴代${record.misscount! - record.bestMisscount!}';
+    final scoreUpdated = (record.score - record.beforeScore) > 0;
+    final misscountUpdated =
+        ((record.beforeMisscount ?? 0) - (record.misscount ?? 0)) > 0;
+    final djLevelUpdated =
+        record.djlevelTypeId - record.beforeDjlevelTypeId > 0;
+    final clearUpdated = record.clearTypeId - record.beforeClearTypeId > 0;
+
     final titleRow = SizedBox(
       height: titleRowHeight,
       child: FittedBox(
@@ -52,28 +34,47 @@ class ScoreTile extends StatelessWidget {
       ),
     );
     final subTitleRow = Column(
-      children: <Widget>[
+      children: [
         Container(
           height: rowHeight,
           child: FittedBox(
-            child: Text(
-              '${record.clearType} ',
-              style: TextStyle(
-                color: clearTypeColor,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            child: clearUpdated
+                ? Row(
+                    children: [
+                      Text(
+                        '${record.beforeClearType} ',
+                        style: TextStyle(
+                          color: getClearTypeColor(record.beforeClearType),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const Text(' -> '),
+                      Text(
+                        '${record.clearType} ',
+                        style: TextStyle(
+                          color: getClearTypeColor(record.clearType),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  )
+                : Text(
+                    '${record.clearType} ',
+                    style: TextStyle(
+                      color: getClearTypeColor(record.clearType),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
             fit: BoxFit.contain,
           ),
           alignment: Alignment.centerLeft,
         ),
         Row(
-          children: <Widget>[
+          children: [
             Expanded(
-              flex: 3,
               child: Column(
-                children: <Widget>[
-                  const SizedBox(
+                children: const [
+                  SizedBox(
                     height: rowHeight,
                     child: FittedBox(
                       child: Text('EX SCORE ',
@@ -84,111 +85,92 @@ class ScoreTile extends StatelessWidget {
                   SizedBox(
                     height: rowHeight,
                     child: FittedBox(
-                        child: Text(
-                          '$score (${record.scoreRate}%) ',
-                        ),
-                        fit: BoxFit.contain),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          height: rowHeight,
-                          child: FittedBox(
-                              child: Text(
-                                '$prevScoreSub ',
-                              ),
-                              fit: BoxFit.contain),
-                          alignment: Alignment.centerLeft,
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: rowHeight,
-                          child: FittedBox(
-                            child: Text(
-                              '$bestScoreSub ',
-                            ),
-                            fit: BoxFit.contain,
-                          ),
-                          alignment: Alignment.centerLeft,
-                        ),
-                      ),
-                    ],
+                      child: Text('MISS COUNT ',
+                          style: TextStyle(color: Colors.black87)),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
               ),
             ),
             Expanded(
-              flex: 3,
               child: Column(
-                children: <Widget>[
-                  const SizedBox(
+                children: [
+                  SizedBox(
                     height: rowHeight,
                     child: FittedBox(
-                      child: Text(
-                        'MISS COUNT ',
-                        style: TextStyle(color: Colors.black87),
-                      ),
-                      fit: BoxFit.contain,
-                    ),
+                        child: scoreUpdated
+                            ? Text(
+                                '${record.score} (+${record.score - record.beforeScore})')
+                            : Text(
+                                '${record.score} ',
+                              ),
+                        fit: BoxFit.contain),
                   ),
                   SizedBox(
                     height: rowHeight,
                     child: FittedBox(
-                        child: Text(
-                          '${record.misscount ?? '---'} ',
-                        ),
+                        child: misscountUpdated
+                            ? Text(
+                                '${record.misscount ?? '---'} (${(record.misscount ?? 0) - (record.beforeMisscount ?? 0)}) ',
+                              )
+                            : Text(
+                                '${record.misscount ?? '---'} ',
+                              ),
                         fit: BoxFit.contain),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                            height: rowHeight,
-                            child: FittedBox(
-                              child: Text(
-                                '$prevMisscountSub ',
-                              ),
-                              fit: BoxFit.contain,
-                            ),
-                            alignment: Alignment.centerLeft),
-                      ),
-                      Expanded(
-                        child: Container(
-                            height: rowHeight,
-                            child: FittedBox(
-                              child: Text(
-                                '$bestMisscountSub ',
-                              ),
-                              fit: BoxFit.contain,
-                            ),
-                            alignment: Alignment.centerLeft),
-                      ),
-                    ],
                   ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
               ),
             ),
             Expanded(
-              flex: 1,
               child: SizedBox(
                 height: rowHeight * 3,
                 child: FittedBox(
                   child: Column(
-                    children: <Widget>[
-                      Text(
-                        record.djLevel,
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: djLevelColor,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(record.scorePace),
-                      Text(record.nextScorePace),
-                    ],
+                    children: djLevelUpdated && record.beforeDjlevelTypeId > 1
+                        ? [
+                            Row(
+                              children: [
+                                Text(
+                                  record.beforeDjlevelType,
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      color: getDjlevelColor(
+                                          record.beforeDjlevelType),
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                const Text(
+                                  ' → ',
+                                ),
+                                Text(
+                                  record.djlevelType,
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      color:
+                                          getDjlevelColor(record.djlevelType),
+                                      fontWeight: FontWeight.w700),
+                                )
+                              ],
+                            ),
+                            Text(
+                                '${record.beforeScoreRate.toStringAsFixed(2)}% → ${record.scoreRate.toStringAsFixed(2)}%'),
+                          ]
+                        : [
+                            Text(
+                              record.djlevelType,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: getDjlevelColor(record.djlevelType),
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            scoreUpdated && record.beforeScore != 0
+                                ? Text(
+                                    '${record.beforeScoreRate.toStringAsFixed(2)}% → ${record.scoreRate.toStringAsFixed(2)}%')
+                                : Text(
+                                    '${record.scoreRate.toStringAsFixed(2)}%'),
+                          ],
                   ),
                   fit: BoxFit.contain,
                 ),
@@ -201,10 +183,18 @@ class ScoreTile extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  flex: (record.scoreRate * 100).round(),
+                  flex: (record.beforeScoreRate * 100).round(),
                   child: Container(
                     height: 9,
                     color: Colors.lightGreen,
+                  ),
+                ),
+                Expanded(
+                  flex: (record.scoreRate * 100).round() -
+                      (record.beforeScoreRate * 100).round(),
+                  child: Container(
+                    height: 9,
+                    color: Colors.lightBlue,
                   ),
                 ),
                 Expanded(
@@ -278,7 +268,7 @@ class ScoreTile extends StatelessWidget {
               ],
             ),
           ],
-        ),
+        )
       ],
     );
     return Container(
@@ -287,7 +277,7 @@ class ScoreTile extends StatelessWidget {
           width: 35,
           child: FittedBox(
             child: Column(
-              children: <Widget>[
+              children: [
                 Text(
                   record.level.toString(),
                   style: TextStyle(fontSize: 30, color: difficultyColor),
