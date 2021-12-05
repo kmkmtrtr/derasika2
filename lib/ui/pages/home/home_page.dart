@@ -62,7 +62,7 @@ class HomePage extends HookConsumerWidget {
               onPressed: () async {
                 await showDialog<void>(
                     context: context,
-                    builder: (BuildContext context) {
+                    builder: (BuildContext _) {
                       return AlertDialog(
                         title: const Text('確認'),
                         content: const Text('公式サイトを開き、CSVを読み込みます。\r\nよろしいですか？'),
@@ -79,22 +79,19 @@ class HomePage extends HookConsumerWidget {
                               final homeViewModel =
                                   ref.watch(homeViewModelProvider);
                               context.popRoute();
-                              context
-                                  .pushRoute(CsvImportWebViewRoute(
+                              final result = await context.pushRoute(
+                                  CsvImportWebViewRoute(
                                       playMode: homeViewModel.playMode,
                                       versionId: await homeViewModel
-                                          .getCurrentVersionId()))
-                                  .then((result) async {
-                                if (result is! List<String>) {
-                                  return;
-                                }
-                                await ref
-                                    .watch(homeViewModelProvider)
-                                    .importCsv(result);
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //     const SnackBar(
-                                //         content: Text('CSVを読み込みました')));
-                              });
+                                          .getCurrentVersionId()));
+                              if (result is! List<String>) {
+                                return;
+                              }
+                              await ref
+                                  .read(homeViewModelProvider)
+                                  .importCsv(result);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('CSVを読み込みました')));
                             },
                           )
                         ],
