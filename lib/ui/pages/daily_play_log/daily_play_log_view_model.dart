@@ -99,12 +99,12 @@ class DailyPlayLogViewModel extends ChangeNotifier {
             ? diffB.compareTo(diffA)
             : a.title.compareTo(b.title);
       case PlayLogOrder.clearTypeAsc:
-        return a.clearType != b.clearType
-            ? a.clearType.compareTo(b.clearType)
+        return a.clearTypeId != b.clearTypeId
+            ? a.clearTypeId.compareTo(b.clearTypeId)
             : a.title.compareTo(b.title);
       case PlayLogOrder.clearTypeDesc:
-        return a.clearType != b.clearType
-            ? b.clearType.compareTo(a.clearType)
+        return a.clearTypeId != b.clearTypeId
+            ? b.clearTypeId.compareTo(a.clearTypeId)
             : a.title.compareTo(b.title);
       case PlayLogOrder.clearTypeDiffAsc:
         final diffA = a.clearTypeId - a.beforeClearTypeId;

@@ -29,6 +29,7 @@ class HomeDrawer extends HookConsumerWidget {
                   leading: const Icon(Icons.history),
                   title: const Text('更新履歴'),
                   onTap: () {
+                    context.popRoute();
                     context.pushRoute(const PlayLogRoute());
                   },
                 ),

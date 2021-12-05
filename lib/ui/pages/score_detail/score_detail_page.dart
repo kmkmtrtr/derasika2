@@ -19,6 +19,7 @@ class ScoreDetailPage extends HookConsumerWidget {
     final snapshot =
         useFuture(useMemoized(scoreViewModel.getChartDetail, [chartId]));
     final chartDetail = scoreViewModel.chartDetail;
+    final theme = Theme.of(context);
     return LoadingContainer(
       isLoaded: snapshot.connectionState == ConnectionState.done,
       child: AutoTabsScaffold(
@@ -43,13 +44,13 @@ class ScoreDetailPage extends HookConsumerWidget {
           return BottomNavigationBar(
             items: const [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.table_chart), label: 'score'),
+                  icon: Icon(Icons.table_chart), label: 'スコア'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.bar_chart), label: 'chart'),
-              BottomNavigationBarItem(icon: Icon(Icons.note), label: 'memo'),
-              BottomNavigationBarItem(icon: Icon(Icons.info), label: 'info'),
+                  icon: Icon(Icons.bar_chart), label: 'グラフ'),
+              BottomNavigationBarItem(icon: Icon(Icons.note), label: 'メモ'),
+              BottomNavigationBarItem(icon: Icon(Icons.info), label: '情報'),
             ],
-            selectedItemColor: Colors.blue,
+            selectedItemColor: theme.primaryColor,
             unselectedItemColor: Colors.grey,
             showUnselectedLabels: true,
             currentIndex: tabsRouter.activeIndex,
