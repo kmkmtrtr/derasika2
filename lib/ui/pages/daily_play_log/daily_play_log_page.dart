@@ -19,8 +19,7 @@ class DailyPlayLogPage extends HookConsumerWidget {
     final date = DateTime.parse(dateString);
     final dailyPlayLogViewModel =
         ref.watch(dailyPlayLogViewModelProvider(dateString));
-    final _ = useFuture(useMemoized(dailyPlayLogViewModel.getDialyPlayLogs,
-        [dailyPlayLogViewModel.dailyPlayLogs.toString()]));
+    final _ = useFuture(useMemoized(dailyPlayLogViewModel.getDialyPlayLogs));
     return AutoTabsScaffold(
       appBarBuilder: (context, tabsRouter) => AppBar(
         title: Text(
@@ -76,6 +75,26 @@ class DailyPlayLogPage extends HookConsumerWidget {
                                 context.popRoute(PlayLogOrder.scoreDiffDesc),
                           ),
                           ListTile(
+                            title: const Text('スコアレート昇順'),
+                            onTap: () =>
+                                context.popRoute(PlayLogOrder.scoreRateAsc),
+                          ),
+                          ListTile(
+                            title: const Text('スコアレート降順'),
+                            onTap: () =>
+                                context.popRoute(PlayLogOrder.scoreRateDesc),
+                          ),
+                          ListTile(
+                            title: const Text('スコアレート差分昇順'),
+                            onTap: () =>
+                                context.popRoute(PlayLogOrder.scoreRateDiffAsc),
+                          ),
+                          ListTile(
+                            title: const Text('スコアレート差分降順'),
+                            onTap: () => context
+                                .popRoute(PlayLogOrder.scoreRateDiffDesc),
+                          ),
+                          ListTile(
                             title: const Text('ミスカウント昇順'),
                             onTap: () =>
                                 context.popRoute(PlayLogOrder.misscountAsc),
@@ -121,10 +140,10 @@ class DailyPlayLogPage extends HookConsumerWidget {
                     if (order == null) {
                       return;
                     }
-                    dailyPlayLogViewModel.orderPlayLog(order);
+                    dailyPlayLogViewModel.changePlayLogOrder(order);
                   },
                   icon: const Icon(Icons.sort),
-                )
+                ),
               ]
             : [],
       ),

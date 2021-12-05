@@ -16,9 +16,9 @@ class PlayDetailPage extends HookConsumerWidget {
     final scrollController = useScrollController();
     final dailyPlayLogViewModel =
         ref.watch(dailyPlayLogViewModelProvider(dateString));
-    final _ = useFuture(useMemoized(dailyPlayLogViewModel.getDialyPlayLogs,
-        [dailyPlayLogViewModel.dailyPlayLogs.toString()]));
-    final dailyPlayLogs = dailyPlayLogViewModel.dailyPlayLogs;
+    final _ = useFuture(useMemoized(dailyPlayLogViewModel.getDialyPlayLogs));
+    final dailyPlayLogs = dailyPlayLogViewModel.dailyPlayLogs.toList()
+      ..sort(dailyPlayLogViewModel.playLogSortCondition);
     return Scrollbar(
       controller: scrollController,
       isAlwaysShown: true,

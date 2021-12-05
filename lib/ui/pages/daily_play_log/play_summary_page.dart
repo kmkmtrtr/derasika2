@@ -18,8 +18,7 @@ class PlaySummaryPage extends HookConsumerWidget {
 
     final dailyPlayLogViewModel =
         ref.watch(dailyPlayLogViewModelProvider(dateString));
-    final _ = useFuture(useMemoized(dailyPlayLogViewModel.getDialyPlayLogs,
-        [dailyPlayLogViewModel.dailyPlayLogs.toString()]));
+    final _ = useFuture(useMemoized(dailyPlayLogViewModel.getDialyPlayLogs));
     return SingleChildScrollView(
       child: Container(
         padding: const EdgeInsets.all(5),
