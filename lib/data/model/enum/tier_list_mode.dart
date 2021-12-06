@@ -1,0 +1,1 @@
+enum TierListMode { hard, normal }

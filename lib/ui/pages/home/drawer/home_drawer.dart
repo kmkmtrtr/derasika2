@@ -33,7 +33,14 @@ class HomeDrawer extends HookConsumerWidget {
                     context.pushRoute(const PlayLogRoute());
                   },
                 ),
-                _getMenuItem(context, Icons.grade, 'SP12地力表', '/sp12tier'),
+                ListTile(
+                  leading: const Icon(Icons.grade),
+                  title: const Text('SP12地力表'),
+                  onTap: () {
+                    context.popRoute();
+                    context.pushRoute(const Sp12TierRoute());
+                  },
+                ),
                 ListTile(
                   leading: const Icon(Icons.file_download),
                   title: const Text('前作スコア読み込み'),
@@ -79,18 +86,6 @@ class HomeDrawer extends HookConsumerWidget {
   final _headerChild = const DrawerHeader(
     child: Text("menu"),
   );
-
-  ListTile _getMenuItem(
-      BuildContext context, IconData icon, String s, String routeName) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(s),
-      onTap: () {
-        // Navigator.pop(context);
-        // Navigator.of(context).pushNamed(routeName);
-      },
-    );
-  }
 
   final aboutMenu = const AboutListTile(
       child: Text("About"),
