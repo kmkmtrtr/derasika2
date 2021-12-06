@@ -4,7 +4,7 @@ part 'score_log.freezed.dart';
 part 'score_log.g.dart';
 
 @freezed
-abstract class ScoreLog with _$ScoreLog {
+class ScoreLog with _$ScoreLog {
   factory ScoreLog(
     int score,
     int clearTypeId,

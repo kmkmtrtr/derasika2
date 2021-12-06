@@ -3,7 +3,7 @@ part 'memo.freezed.dart';
 part 'memo.g.dart';
 
 @freezed
-abstract class Memo with _$Memo {
+class Memo with _$Memo {
   factory Memo(
     @JsonKey(name: 'id') int? id,
     @JsonKey(name: 'created_at', fromJson: Memo._parseDateTime)

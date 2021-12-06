@@ -3,7 +3,7 @@ part 'play_log.freezed.dart';
 part 'play_log.g.dart';
 
 @freezed
-abstract class PlayLog with _$PlayLog {
+class PlayLog with _$PlayLog {
   factory PlayLog(
     @JsonKey(name: 'version') String version,
     @JsonKey(name: 'version_id') int versionId,

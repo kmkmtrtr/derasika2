@@ -4,7 +4,7 @@ part 'chart_detail.freezed.dart';
 part 'chart_detail.g.dart';
 
 @freezed
-abstract class ChartDetail with _$ChartDetail {
+class ChartDetail with _$ChartDetail {
   factory ChartDetail(
     @JsonKey(name: 'title') String title,
     @JsonKey(name: 'artist') String artist,

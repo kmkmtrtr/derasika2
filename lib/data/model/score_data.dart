@@ -4,7 +4,7 @@ part 'score_data.freezed.dart';
 part 'score_data.g.dart';
 
 @freezed
-abstract class ScoreData with _$ScoreData {
+class ScoreData with _$ScoreData {
   factory ScoreData(
       int chartId,
       String title,

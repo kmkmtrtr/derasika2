@@ -3,7 +3,7 @@ part 'daily_play_log.freezed.dart';
 part 'daily_play_log.g.dart';
 
 @freezed
-abstract class DailyPlayLog with _$DailyPlayLog {
+class DailyPlayLog with _$DailyPlayLog {
   factory DailyPlayLog(
     @JsonKey(name: 'title') String title,
     @JsonKey(name: 'difficulty') String difficulty,

@@ -4,7 +4,7 @@ part 'sp12_tier_data.freezed.dart';
 part 'sp12_tier_data.g.dart';
 
 @freezed
-abstract class Sp12TierData with _$Sp12TierData {
+class Sp12TierData with _$Sp12TierData {
   factory Sp12TierData(
     @JsonKey(name: 'chart_id') int chartId,
     @JsonKey(name: 'title') String title,
