@@ -98,7 +98,9 @@ class HomePage extends HookConsumerWidget {
                       );
                     });
               }),
-          IconButton(icon: const Icon(Icons.sort), onPressed: () {}),
+          IconButton(
+              icon: const Icon(Icons.sort),
+              onPressed: () => context.pushRoute(const SortRoute())),
           IconButton(icon: const Icon(Icons.filter_alt), onPressed: () {}),
         ],
       ),
