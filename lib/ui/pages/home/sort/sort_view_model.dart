@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final sortViewModelProvider =
-    ChangeNotifierProvider((ref) => SortViewModel(ref.read));
+    ChangeNotifierProvider.autoDispose((ref) => SortViewModel(ref.read));
 
 class SortViewModel extends ChangeNotifier {
   SortViewModel(this._reader);
@@ -14,17 +14,18 @@ class SortViewModel extends ChangeNotifier {
   final Reader _reader;
   late final StateController<List<SortCondition>> _sortConditionState =
       _reader(sortConditionProvider.state);
+  late List<SortCondition> _sortCondition =
+      _reader(sortConditionProvider.state).state.toList();
 
-  List<SortCondition> get sortConditions => _sortConditionState.state;
+  List<SortCondition> get sortConditions => _sortCondition;
 
   void addCondition() {
-    _sortConditionState.state
-        .add(SortCondition(SortElement.title, SortOrder.asc));
+    _sortCondition.add(SortCondition(SortElement.title, SortOrder.asc));
     notifyListeners();
   }
 
   void resetConditions() {
-    _sortConditionState.state = [
+    _sortCondition = [
       SortCondition(SortElement.title, SortOrder.asc),
       SortCondition(SortElement.difficulty, SortOrder.asc),
     ];
@@ -32,26 +33,30 @@ class SortViewModel extends ChangeNotifier {
   }
 
   void changeElement(int index, SortElement element) {
-    final condition = _sortConditionState.state[index];
-    _sortConditionState.state[index] = condition.copyWith(sortElement: element);
+    final condition = _sortCondition[index];
+    _sortCondition[index] = condition.copyWith(sortElement: element);
     notifyListeners();
   }
 
   void changeOrder(int index, SortOrder order) {
-    final condition = _sortConditionState.state[index];
-    _sortConditionState.state[index] = condition.copyWith(sortOrder: order);
+    final condition = _sortCondition[index];
+    _sortCondition[index] = condition.copyWith(sortOrder: order);
     notifyListeners();
   }
 
   void removeCondition(int index) {
-    _sortConditionState.state.removeAt(index);
+    _sortCondition.removeAt(index);
     notifyListeners();
   }
 
   void reorder(int index1, int index2) {
-    final condition = _sortConditionState.state[index1];
-    _sortConditionState.state.insert(index2, condition);
-    _sortConditionState.state.removeAt(index1 > index2 ? index1 + 1 : index1);
+    final condition = _sortCondition[index1];
+    _sortCondition.insert(index2, condition);
+    _sortCondition.removeAt(index1 > index2 ? index1 + 1 : index1);
     notifyListeners();
+  }
+
+  void save() {
+    _sortConditionState.state = _sortCondition;
   }
 }

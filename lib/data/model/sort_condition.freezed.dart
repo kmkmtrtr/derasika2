@@ -130,9 +130,10 @@ class __$SortConditionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SortCondition implements _SortCondition {
+class _$_SortCondition extends _SortCondition {
   _$_SortCondition(@JsonKey(name: 'sort_element') this.sortElement,
-      @JsonKey(name: 'sort_order') this.sortOrder);
+      @JsonKey(name: 'sort_order') this.sortOrder)
+      : super._();
 
   factory _$_SortCondition.fromJson(Map<String, dynamic> json) =>
       _$$_SortConditionFromJson(json);
@@ -174,9 +175,10 @@ class _$_SortCondition implements _SortCondition {
   }
 }
 
-abstract class _SortCondition implements SortCondition {
+abstract class _SortCondition extends SortCondition {
   factory _SortCondition(@JsonKey(name: 'sort_element') SortElement sortElement,
       @JsonKey(name: 'sort_order') SortOrder sortOrder) = _$_SortCondition;
+  _SortCondition._() : super._();
 
   factory _SortCondition.fromJson(Map<String, dynamic> json) =
       _$_SortCondition.fromJson;

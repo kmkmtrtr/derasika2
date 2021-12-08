@@ -2,7 +2,6 @@ import 'package:derasika2/data/model/enum/sort_element.dart';
 import 'package:derasika2/data/model/enum/sort_order.dart';
 import 'package:derasika2/ui/pages/home/sort/sort_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SortPage extends HookConsumerWidget {
@@ -18,12 +17,10 @@ class SortPage extends HookConsumerWidget {
       SortElement.scoreRate,
       SortElement.clearType,
       SortElement.djPoint,
-      SortElement.maxBpm,
       SortElement.notes,
       SortElement.version,
       SortElement.prevScoreDiff,
       SortElement.bestScoreDiff,
-      SortElement.targetScoreDiff,
     ]
         .asMap()
         .entries
@@ -44,7 +41,6 @@ class SortPage extends HookConsumerWidget {
           ),
         )
         .toList();
-    ;
 
     final children = provider.sortConditions
         .asMap()
@@ -102,7 +98,7 @@ class SortPage extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
-            ref.watch(sortViewModelProvider).addCondition();
+            ref.read(sortViewModelProvider).addCondition();
           }),
       persistentFooterButtons: [
         OutlinedButton(
@@ -113,13 +109,15 @@ class SortPage extends HookConsumerWidget {
         ),
         OutlinedButton(
           onPressed: () {
-            ref.watch(sortViewModelProvider).resetConditions();
+            ref.read(sortViewModelProvider).resetConditions();
           },
           child: const Text('Reset'),
         ),
         OutlinedButton(
           onPressed: () async {
-            Navigator.pop(context);
+            final sortViewModel = ref.read(sortViewModelProvider);
+            sortViewModel.save();
+            Navigator.pop(context, sortViewModel.sortConditions);
           },
           child: const Text('Sort'),
         ),

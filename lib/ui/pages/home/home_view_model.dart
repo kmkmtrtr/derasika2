@@ -1,5 +1,6 @@
 import 'package:derasika2/data/model/enum/play_mode.dart';
 import 'package:derasika2/data/model/score_data.dart';
+import 'package:derasika2/data/model/sort_condition.dart';
 import 'package:derasika2/data/repository/score_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -29,6 +30,8 @@ class HomeViewModel extends ChangeNotifier {
     return scores.where((e) => e.title.toLowerCase().contains(filter)).toList();
   }
 
+  List<SortCondition> _sortCondition = [];
+
   Future<void> fetchScores() {
     return _repository
         .getCurrentVersionScores(where, whereArgs, orderBy, playMode)
@@ -54,5 +57,22 @@ class HomeViewModel extends ChangeNotifier {
     await _repository.importCsv(csvData, playMode);
     importDateTime = DateTime.now();
     notifyListeners();
+  }
+
+  void changeSortOrder(List<SortCondition> sortCondition) {
+    _sortCondition = sortCondition;
+    notifyListeners();
+  }
+
+  int sortFunction(ScoreData a, ScoreData b) {
+    int defaultSortFunction(ScoreData a, ScoreData b) {
+      return a.title != b.title
+          ? a.title.compareTo(b.title)
+          : a.difficulty.compareTo(b.difficulty);
+    }
+
+    return _sortCondition
+        .map((e) => e.ruleFunction(a, b))
+        .firstWhere((e) => e != 0, orElse: () => defaultSortFunction(a, b));
   }
 }
