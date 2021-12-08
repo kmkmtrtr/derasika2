@@ -28,28 +28,7 @@ class ScoreDataSource {
       whereArgs: defaultArg + (whereArgs ?? []),
       orderBy: orderBy,
     );
-    return data
-        .map(
-          (e) => ScoreData(
-            e['chart_id'] as int,
-            e['title'] as String,
-            e['level'] as int,
-            e['difficulty'] as String,
-            e['mode_type_id'] as int,
-            e['score'] as int,
-            e['djlevel_type'] as String,
-            e['score_rate'] as double,
-            e['score_pace'] as String,
-            e['next_score_pace'] as String,
-            e['prev_score'] as int?,
-            e['best_score'] as int?,
-            e['clear_type'] as String,
-            int.tryParse(e['misscount'].toString()),
-            int.tryParse(e['prev_misscount']?.toString() ?? ''),
-            int.tryParse(e['best_misscount']?.toString() ?? ''),
-          ),
-        )
-        .toList();
+    return data.map((e) => ScoreData.fromJson(e)).toList();
   }
 
   Future<List<ScoreLog>> fetchChartScores(int chartId) async {

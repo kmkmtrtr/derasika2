@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:derasika2/data/model/score_data.dart';
+import 'package:derasika2/data/model/sort_condition.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
 import 'package:derasika2/ui/pages/home/drawer/home_drawer.dart';
 import 'package:derasika2/ui/pages/home/home_view_model.dart';
@@ -20,12 +21,12 @@ class HomePage extends HookConsumerWidget {
     final snapshot = useFuture(useMemoized(homeViewModel.fetchScores, [
       homeViewModel.where,
       homeViewModel.whereArgs,
-      homeViewModel.orderBy,
       homeViewModel.playMode,
       homeViewModel.importDateTime,
     ]));
-    final scoreList = List<ScoreData>.from(
-        homeViewModel.scores.where((e) => e.modeType == 1));
+    final scoreList =
+        List<ScoreData>.from(homeViewModel.scores.where((e) => e.modeType == 1))
+          ..sort(homeViewModel.sortFunction);
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -98,7 +99,20 @@ class HomePage extends HookConsumerWidget {
                       );
                     });
               }),
-          IconButton(icon: const Icon(Icons.sort), onPressed: () {}),
+          IconButton(
+              icon: const Icon(Icons.sort),
+              onPressed: () async {
+                final sortCondition =
+                    await context.pushRoute(const SortRoute());
+                if (sortCondition == null ||
+                    sortCondition is! List<SortCondition>) {
+                  return;
+                }
+                ref.read(homeViewModelProvider).changeSortOrder(sortCondition);
+                scrollController.jumpTo(0);
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(const SnackBar(content: Text('並び替えを実行しました')));
+              }),
           IconButton(icon: const Icon(Icons.filter_alt), onPressed: () {}),
         ],
       ),
