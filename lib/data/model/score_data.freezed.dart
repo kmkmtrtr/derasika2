@@ -639,70 +639,61 @@ class _$_ScoreData implements _ScoreData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ScoreData &&
-            (identical(other.chartId, chartId) || other.chartId == chartId) &&
-            (identical(other.versionId, versionId) ||
-                other.versionId == versionId) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.difficultyId, difficultyId) ||
-                other.difficultyId == difficultyId) &&
-            (identical(other.difficulty, difficulty) ||
-                other.difficulty == difficulty) &&
-            (identical(other.modeType, modeType) ||
-                other.modeType == modeType) &&
-            (identical(other.level, level) || other.level == level) &&
-            (identical(other.notes, notes) || other.notes == notes) &&
-            (identical(other.clearTypeId, clearTypeId) ||
-                other.clearTypeId == clearTypeId) &&
-            (identical(other.clearType, clearType) ||
-                other.clearType == clearType) &&
-            (identical(other.score, score) || other.score == score) &&
-            (identical(other.djLevelId, djLevelId) ||
-                other.djLevelId == djLevelId) &&
-            (identical(other.djLevel, djLevel) || other.djLevel == djLevel) &&
-            (identical(other.scorePace, scorePace) ||
-                other.scorePace == scorePace) &&
-            (identical(other.nextScorePace, nextScorePace) ||
-                other.nextScorePace == nextScorePace) &&
-            (identical(other.scoreRate, scoreRate) ||
-                other.scoreRate == scoreRate) &&
-            (identical(other.djpoint, djpoint) || other.djpoint == djpoint) &&
-            (identical(other.misscount, misscount) ||
-                other.misscount == misscount) &&
-            (identical(other.prevScore, prevScore) ||
-                other.prevScore == prevScore) &&
-            (identical(other.bestScore, bestScore) ||
-                other.bestScore == bestScore) &&
-            (identical(other.prevMisscount, prevMisscount) ||
-                other.prevMisscount == prevMisscount) &&
-            (identical(other.bestMisscount, bestMisscount) ||
-                other.bestMisscount == bestMisscount));
+            const DeepCollectionEquality().equals(other.chartId, chartId) &&
+            const DeepCollectionEquality().equals(other.versionId, versionId) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality()
+                .equals(other.difficultyId, difficultyId) &&
+            const DeepCollectionEquality()
+                .equals(other.difficulty, difficulty) &&
+            const DeepCollectionEquality().equals(other.modeType, modeType) &&
+            const DeepCollectionEquality().equals(other.level, level) &&
+            const DeepCollectionEquality().equals(other.notes, notes) &&
+            const DeepCollectionEquality()
+                .equals(other.clearTypeId, clearTypeId) &&
+            const DeepCollectionEquality().equals(other.clearType, clearType) &&
+            const DeepCollectionEquality().equals(other.score, score) &&
+            const DeepCollectionEquality().equals(other.djLevelId, djLevelId) &&
+            const DeepCollectionEquality().equals(other.djLevel, djLevel) &&
+            const DeepCollectionEquality().equals(other.scorePace, scorePace) &&
+            const DeepCollectionEquality()
+                .equals(other.nextScorePace, nextScorePace) &&
+            const DeepCollectionEquality().equals(other.scoreRate, scoreRate) &&
+            const DeepCollectionEquality().equals(other.djpoint, djpoint) &&
+            const DeepCollectionEquality().equals(other.misscount, misscount) &&
+            const DeepCollectionEquality().equals(other.prevScore, prevScore) &&
+            const DeepCollectionEquality().equals(other.bestScore, bestScore) &&
+            const DeepCollectionEquality()
+                .equals(other.prevMisscount, prevMisscount) &&
+            const DeepCollectionEquality()
+                .equals(other.bestMisscount, bestMisscount));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        chartId,
-        versionId,
-        title,
-        difficultyId,
-        difficulty,
-        modeType,
-        level,
-        notes,
-        clearTypeId,
-        clearType,
-        score,
-        djLevelId,
-        djLevel,
-        scorePace,
-        nextScorePace,
-        scoreRate,
-        djpoint,
-        misscount,
-        prevScore,
-        bestScore,
-        prevMisscount,
-        bestMisscount
+        const DeepCollectionEquality().hash(chartId),
+        const DeepCollectionEquality().hash(versionId),
+        const DeepCollectionEquality().hash(title),
+        const DeepCollectionEquality().hash(difficultyId),
+        const DeepCollectionEquality().hash(difficulty),
+        const DeepCollectionEquality().hash(modeType),
+        const DeepCollectionEquality().hash(level),
+        const DeepCollectionEquality().hash(notes),
+        const DeepCollectionEquality().hash(clearTypeId),
+        const DeepCollectionEquality().hash(clearType),
+        const DeepCollectionEquality().hash(score),
+        const DeepCollectionEquality().hash(djLevelId),
+        const DeepCollectionEquality().hash(djLevel),
+        const DeepCollectionEquality().hash(scorePace),
+        const DeepCollectionEquality().hash(nextScorePace),
+        const DeepCollectionEquality().hash(scoreRate),
+        const DeepCollectionEquality().hash(djpoint),
+        const DeepCollectionEquality().hash(misscount),
+        const DeepCollectionEquality().hash(prevScore),
+        const DeepCollectionEquality().hash(bestScore),
+        const DeepCollectionEquality().hash(prevMisscount),
+        const DeepCollectionEquality().hash(bestMisscount)
       ]);
 
   @JsonKey(ignore: true)

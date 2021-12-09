@@ -155,14 +155,16 @@ class _$_SortCondition extends _SortCondition {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _SortCondition &&
-            (identical(other.sortElement, sortElement) ||
-                other.sortElement == sortElement) &&
-            (identical(other.sortOrder, sortOrder) ||
-                other.sortOrder == sortOrder));
+            const DeepCollectionEquality()
+                .equals(other.sortElement, sortElement) &&
+            const DeepCollectionEquality().equals(other.sortOrder, sortOrder));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, sortElement, sortOrder);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(sortElement),
+      const DeepCollectionEquality().hash(sortOrder));
 
   @JsonKey(ignore: true)
   @override

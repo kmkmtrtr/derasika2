@@ -314,39 +314,38 @@ class _$_Sp12TierData implements _Sp12TierData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Sp12TierData &&
-            (identical(other.chartId, chartId) || other.chartId == chartId) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.difficultyTypeId, difficultyTypeId) ||
-                other.difficultyTypeId == difficultyTypeId) &&
-            (identical(other.difficulty, difficulty) ||
-                other.difficulty == difficulty) &&
-            (identical(other.clearTierId, clearTierId) ||
-                other.clearTierId == clearTierId) &&
-            (identical(other.clearTierClass, clearTierClass) ||
-                other.clearTierClass == clearTierClass) &&
-            (identical(other.hardTierId, hardTierId) ||
-                other.hardTierId == hardTierId) &&
-            (identical(other.hardTierClass, hardTierClass) ||
-                other.hardTierClass == hardTierClass) &&
-            (identical(other.clearTypeId, clearTypeId) ||
-                other.clearTypeId == clearTypeId) &&
-            (identical(other.clearType, clearType) ||
-                other.clearType == clearType));
+            const DeepCollectionEquality().equals(other.chartId, chartId) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality()
+                .equals(other.difficultyTypeId, difficultyTypeId) &&
+            const DeepCollectionEquality()
+                .equals(other.difficulty, difficulty) &&
+            const DeepCollectionEquality()
+                .equals(other.clearTierId, clearTierId) &&
+            const DeepCollectionEquality()
+                .equals(other.clearTierClass, clearTierClass) &&
+            const DeepCollectionEquality()
+                .equals(other.hardTierId, hardTierId) &&
+            const DeepCollectionEquality()
+                .equals(other.hardTierClass, hardTierClass) &&
+            const DeepCollectionEquality()
+                .equals(other.clearTypeId, clearTypeId) &&
+            const DeepCollectionEquality().equals(other.clearType, clearType));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      chartId,
-      title,
-      difficultyTypeId,
-      difficulty,
-      clearTierId,
-      clearTierClass,
-      hardTierId,
-      hardTierClass,
-      clearTypeId,
-      clearType);
+      const DeepCollectionEquality().hash(chartId),
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(difficultyTypeId),
+      const DeepCollectionEquality().hash(difficulty),
+      const DeepCollectionEquality().hash(clearTierId),
+      const DeepCollectionEquality().hash(clearTierClass),
+      const DeepCollectionEquality().hash(hardTierId),
+      const DeepCollectionEquality().hash(hardTierClass),
+      const DeepCollectionEquality().hash(clearTypeId),
+      const DeepCollectionEquality().hash(clearType));
 
   @JsonKey(ignore: true)
   @override

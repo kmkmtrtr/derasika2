@@ -228,17 +228,21 @@ class _$_Memo implements _Memo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _Memo &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.text, text) || other.text == text) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.chartId, chartId) || other.chartId == chartId));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
+            const DeepCollectionEquality().equals(other.text, text) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.chartId, chartId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, createdAt, text, title, chartId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(createdAt),
+      const DeepCollectionEquality().hash(text),
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(chartId));
 
   @JsonKey(ignore: true)
   @override

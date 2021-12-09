@@ -656,88 +656,87 @@ class _$_CsvUntilRootage implements _CsvUntilRootage {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CsvUntilRootage &&
-            (identical(other.version, version) || other.version == version) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.genre, genre) || other.genre == genre) &&
-            (identical(other.artist, artist) || other.artist == artist) &&
-            (identical(other.playcount, playcount) ||
-                other.playcount == playcount) &&
-            (identical(other.normalLevel, normalLevel) ||
-                other.normalLevel == normalLevel) &&
-            (identical(other.normalExScore, normalExScore) ||
-                other.normalExScore == normalExScore) &&
-            (identical(other.normalPgreat, normalPgreat) ||
-                other.normalPgreat == normalPgreat) &&
-            (identical(other.normalGreat, normalGreat) ||
-                other.normalGreat == normalGreat) &&
-            (identical(other.normalMisscount, normalMisscount) ||
-                other.normalMisscount == normalMisscount) &&
-            (identical(other.normalClearType, normalClearType) ||
-                other.normalClearType == normalClearType) &&
-            (identical(other.normalDjlevel, normalDjlevel) ||
-                other.normalDjlevel == normalDjlevel) &&
-            (identical(other.hyperLevel, hyperLevel) ||
-                other.hyperLevel == hyperLevel) &&
-            (identical(other.hyperExScore, hyperExScore) ||
-                other.hyperExScore == hyperExScore) &&
-            (identical(other.hyperPgreat, hyperPgreat) ||
-                other.hyperPgreat == hyperPgreat) &&
-            (identical(other.hyperGreat, hyperGreat) ||
-                other.hyperGreat == hyperGreat) &&
-            (identical(other.hyperMisscount, hyperMisscount) ||
-                other.hyperMisscount == hyperMisscount) &&
-            (identical(other.hyperClearType, hyperClearType) ||
-                other.hyperClearType == hyperClearType) &&
-            (identical(other.hyperDjlevel, hyperDjlevel) ||
-                other.hyperDjlevel == hyperDjlevel) &&
-            (identical(other.anotherLevel, anotherLevel) ||
-                other.anotherLevel == anotherLevel) &&
-            (identical(other.anotherExScore, anotherExScore) ||
-                other.anotherExScore == anotherExScore) &&
-            (identical(other.anotherPgreat, anotherPgreat) ||
-                other.anotherPgreat == anotherPgreat) &&
-            (identical(other.anotherGreat, anotherGreat) ||
-                other.anotherGreat == anotherGreat) &&
-            (identical(other.anotherMisscount, anotherMisscount) ||
-                other.anotherMisscount == anotherMisscount) &&
-            (identical(other.anotherClearType, anotherClearType) ||
-                other.anotherClearType == anotherClearType) &&
-            (identical(other.anotherDjlevel, anotherDjlevel) ||
-                other.anotherDjlevel == anotherDjlevel) &&
-            (identical(other.lastplayAt, lastplayAt) ||
-                other.lastplayAt == lastplayAt));
+            const DeepCollectionEquality().equals(other.version, version) &&
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.genre, genre) &&
+            const DeepCollectionEquality().equals(other.artist, artist) &&
+            const DeepCollectionEquality().equals(other.playcount, playcount) &&
+            const DeepCollectionEquality()
+                .equals(other.normalLevel, normalLevel) &&
+            const DeepCollectionEquality()
+                .equals(other.normalExScore, normalExScore) &&
+            const DeepCollectionEquality()
+                .equals(other.normalPgreat, normalPgreat) &&
+            const DeepCollectionEquality()
+                .equals(other.normalGreat, normalGreat) &&
+            const DeepCollectionEquality()
+                .equals(other.normalMisscount, normalMisscount) &&
+            const DeepCollectionEquality()
+                .equals(other.normalClearType, normalClearType) &&
+            const DeepCollectionEquality()
+                .equals(other.normalDjlevel, normalDjlevel) &&
+            const DeepCollectionEquality()
+                .equals(other.hyperLevel, hyperLevel) &&
+            const DeepCollectionEquality()
+                .equals(other.hyperExScore, hyperExScore) &&
+            const DeepCollectionEquality()
+                .equals(other.hyperPgreat, hyperPgreat) &&
+            const DeepCollectionEquality()
+                .equals(other.hyperGreat, hyperGreat) &&
+            const DeepCollectionEquality()
+                .equals(other.hyperMisscount, hyperMisscount) &&
+            const DeepCollectionEquality()
+                .equals(other.hyperClearType, hyperClearType) &&
+            const DeepCollectionEquality()
+                .equals(other.hyperDjlevel, hyperDjlevel) &&
+            const DeepCollectionEquality()
+                .equals(other.anotherLevel, anotherLevel) &&
+            const DeepCollectionEquality()
+                .equals(other.anotherExScore, anotherExScore) &&
+            const DeepCollectionEquality()
+                .equals(other.anotherPgreat, anotherPgreat) &&
+            const DeepCollectionEquality()
+                .equals(other.anotherGreat, anotherGreat) &&
+            const DeepCollectionEquality()
+                .equals(other.anotherMisscount, anotherMisscount) &&
+            const DeepCollectionEquality()
+                .equals(other.anotherClearType, anotherClearType) &&
+            const DeepCollectionEquality()
+                .equals(other.anotherDjlevel, anotherDjlevel) &&
+            const DeepCollectionEquality()
+                .equals(other.lastplayAt, lastplayAt));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        version,
-        title,
-        genre,
-        artist,
-        playcount,
-        normalLevel,
-        normalExScore,
-        normalPgreat,
-        normalGreat,
-        normalMisscount,
-        normalClearType,
-        normalDjlevel,
-        hyperLevel,
-        hyperExScore,
-        hyperPgreat,
-        hyperGreat,
-        hyperMisscount,
-        hyperClearType,
-        hyperDjlevel,
-        anotherLevel,
-        anotherExScore,
-        anotherPgreat,
-        anotherGreat,
-        anotherMisscount,
-        anotherClearType,
-        anotherDjlevel,
-        lastplayAt
+        const DeepCollectionEquality().hash(version),
+        const DeepCollectionEquality().hash(title),
+        const DeepCollectionEquality().hash(genre),
+        const DeepCollectionEquality().hash(artist),
+        const DeepCollectionEquality().hash(playcount),
+        const DeepCollectionEquality().hash(normalLevel),
+        const DeepCollectionEquality().hash(normalExScore),
+        const DeepCollectionEquality().hash(normalPgreat),
+        const DeepCollectionEquality().hash(normalGreat),
+        const DeepCollectionEquality().hash(normalMisscount),
+        const DeepCollectionEquality().hash(normalClearType),
+        const DeepCollectionEquality().hash(normalDjlevel),
+        const DeepCollectionEquality().hash(hyperLevel),
+        const DeepCollectionEquality().hash(hyperExScore),
+        const DeepCollectionEquality().hash(hyperPgreat),
+        const DeepCollectionEquality().hash(hyperGreat),
+        const DeepCollectionEquality().hash(hyperMisscount),
+        const DeepCollectionEquality().hash(hyperClearType),
+        const DeepCollectionEquality().hash(hyperDjlevel),
+        const DeepCollectionEquality().hash(anotherLevel),
+        const DeepCollectionEquality().hash(anotherExScore),
+        const DeepCollectionEquality().hash(anotherPgreat),
+        const DeepCollectionEquality().hash(anotherGreat),
+        const DeepCollectionEquality().hash(anotherMisscount),
+        const DeepCollectionEquality().hash(anotherClearType),
+        const DeepCollectionEquality().hash(anotherDjlevel),
+        const DeepCollectionEquality().hash(lastplayAt)
       ]);
 
   @JsonKey(ignore: true)

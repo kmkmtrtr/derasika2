@@ -594,67 +594,62 @@ class _$_DailyPlayLog implements _DailyPlayLog {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _DailyPlayLog &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.difficulty, difficulty) ||
-                other.difficulty == difficulty) &&
-            (identical(other.level, level) || other.level == level) &&
-            (identical(other.chartId, chartId) || other.chartId == chartId) &&
-            (identical(other.clearTypeId, clearTypeId) ||
-                other.clearTypeId == clearTypeId) &&
-            (identical(other.clearType, clearType) ||
-                other.clearType == clearType) &&
-            (identical(other.beforeClearTypeId, beforeClearTypeId) ||
-                other.beforeClearTypeId == beforeClearTypeId) &&
-            (identical(other.beforeClearType, beforeClearType) ||
-                other.beforeClearType == beforeClearType) &&
-            (identical(other.djlevelTypeId, djlevelTypeId) ||
-                other.djlevelTypeId == djlevelTypeId) &&
-            (identical(other.djlevelType, djlevelType) ||
-                other.djlevelType == djlevelType) &&
-            (identical(other.beforeDjlevelTypeId, beforeDjlevelTypeId) ||
-                other.beforeDjlevelTypeId == beforeDjlevelTypeId) &&
-            (identical(other.beforeDjlevelType, beforeDjlevelType) ||
-                other.beforeDjlevelType == beforeDjlevelType) &&
-            (identical(other.score, score) || other.score == score) &&
-            (identical(other.beforeScore, beforeScore) ||
-                other.beforeScore == beforeScore) &&
-            (identical(other.scoreRate, scoreRate) ||
-                other.scoreRate == scoreRate) &&
-            (identical(other.beforeScoreRate, beforeScoreRate) ||
-                other.beforeScoreRate == beforeScoreRate) &&
-            (identical(other.misscount, misscount) ||
-                other.misscount == misscount) &&
-            (identical(other.beforeMisscount, beforeMisscount) ||
-                other.beforeMisscount == beforeMisscount) &&
-            (identical(other.versionId, versionId) ||
-                other.versionId == versionId) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality()
+                .equals(other.difficulty, difficulty) &&
+            const DeepCollectionEquality().equals(other.level, level) &&
+            const DeepCollectionEquality().equals(other.chartId, chartId) &&
+            const DeepCollectionEquality()
+                .equals(other.clearTypeId, clearTypeId) &&
+            const DeepCollectionEquality().equals(other.clearType, clearType) &&
+            const DeepCollectionEquality()
+                .equals(other.beforeClearTypeId, beforeClearTypeId) &&
+            const DeepCollectionEquality()
+                .equals(other.beforeClearType, beforeClearType) &&
+            const DeepCollectionEquality()
+                .equals(other.djlevelTypeId, djlevelTypeId) &&
+            const DeepCollectionEquality()
+                .equals(other.djlevelType, djlevelType) &&
+            const DeepCollectionEquality()
+                .equals(other.beforeDjlevelTypeId, beforeDjlevelTypeId) &&
+            const DeepCollectionEquality()
+                .equals(other.beforeDjlevelType, beforeDjlevelType) &&
+            const DeepCollectionEquality().equals(other.score, score) &&
+            const DeepCollectionEquality()
+                .equals(other.beforeScore, beforeScore) &&
+            const DeepCollectionEquality().equals(other.scoreRate, scoreRate) &&
+            const DeepCollectionEquality()
+                .equals(other.beforeScoreRate, beforeScoreRate) &&
+            const DeepCollectionEquality().equals(other.misscount, misscount) &&
+            const DeepCollectionEquality()
+                .equals(other.beforeMisscount, beforeMisscount) &&
+            const DeepCollectionEquality().equals(other.versionId, versionId) &&
+            const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        title,
-        difficulty,
-        level,
-        chartId,
-        clearTypeId,
-        clearType,
-        beforeClearTypeId,
-        beforeClearType,
-        djlevelTypeId,
-        djlevelType,
-        beforeDjlevelTypeId,
-        beforeDjlevelType,
-        score,
-        beforeScore,
-        scoreRate,
-        beforeScoreRate,
-        misscount,
-        beforeMisscount,
-        versionId,
-        updatedAt
+        const DeepCollectionEquality().hash(title),
+        const DeepCollectionEquality().hash(difficulty),
+        const DeepCollectionEquality().hash(level),
+        const DeepCollectionEquality().hash(chartId),
+        const DeepCollectionEquality().hash(clearTypeId),
+        const DeepCollectionEquality().hash(clearType),
+        const DeepCollectionEquality().hash(beforeClearTypeId),
+        const DeepCollectionEquality().hash(beforeClearType),
+        const DeepCollectionEquality().hash(djlevelTypeId),
+        const DeepCollectionEquality().hash(djlevelType),
+        const DeepCollectionEquality().hash(beforeDjlevelTypeId),
+        const DeepCollectionEquality().hash(beforeDjlevelType),
+        const DeepCollectionEquality().hash(score),
+        const DeepCollectionEquality().hash(beforeScore),
+        const DeepCollectionEquality().hash(scoreRate),
+        const DeepCollectionEquality().hash(beforeScoreRate),
+        const DeepCollectionEquality().hash(misscount),
+        const DeepCollectionEquality().hash(beforeMisscount),
+        const DeepCollectionEquality().hash(versionId),
+        const DeepCollectionEquality().hash(updatedAt)
       ]);
 
   @JsonKey(ignore: true)

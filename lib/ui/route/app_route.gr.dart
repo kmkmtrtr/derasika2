@@ -50,7 +50,7 @@ class AppRouter extends _i15.RootStackRouter {
           fullscreenDialog: true);
     },
     ScoreDetailRoute.name: (routeData) {
-      final pathParams = routeData.pathParams;
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<ScoreDetailRouteArgs>(
           orElse: () => ScoreDetailRouteArgs(chartId: pathParams.getInt('id')));
       return _i15.AdaptivePage<dynamic>(
@@ -77,7 +77,7 @@ class AppRouter extends _i15.RootStackRouter {
           routeData: routeData, child: const _i6.Sp12TierPage());
     },
     DailyPlayLogRoute.name: (routeData) {
-      final pathParams = routeData.pathParams;
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<DailyPlayLogRouteArgs>(
           orElse: () =>
               DailyPlayLogRouteArgs(dateString: pathParams.getString('date')));
@@ -112,7 +112,7 @@ class AppRouter extends _i15.RootStackRouter {
           child: _i11.InfoPage(key: args.key, chartId: args.chartId));
     },
     Sp12TierListRoute.name: (routeData) {
-      final pathParams = routeData.pathParams;
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<Sp12TierListRouteArgs>(
           orElse: () =>
               Sp12TierListRouteArgs(mode: pathParams.getString('mode')));
@@ -121,7 +121,7 @@ class AppRouter extends _i15.RootStackRouter {
           child: _i12.Sp12TierListPage(key: args.key, mode: args.mode));
     },
     PlaySummaryRoute.name: (routeData) {
-      final pathParams = routeData.pathParams;
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<PlaySummaryRouteArgs>(
           orElse: () =>
               PlaySummaryRouteArgs(dateString: pathParams.getString('date')));
@@ -131,7 +131,7 @@ class AppRouter extends _i15.RootStackRouter {
               _i13.PlaySummaryPage(key: args.key, dateString: args.dateString));
     },
     PlayDetailRoute.name: (routeData) {
-      final pathParams = routeData.pathParams;
+      final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<PlayDetailRouteArgs>(
           orElse: () =>
               PlayDetailRouteArgs(dateString: pathParams.getString('date')));
@@ -216,6 +216,11 @@ class ScoreDetailRouteArgs {
   final _i16.Key? key;
 
   final int chartId;
+
+  @override
+  String toString() {
+    return 'ScoreDetailRouteArgs{key: $key, chartId: $chartId}';
+  }
 }
 
 /// generated route for [_i4.CsvImportWebViewPage]
@@ -240,6 +245,11 @@ class CsvImportWebViewRouteArgs {
   final _i17.PlayMode playMode;
 
   final int versionId;
+
+  @override
+  String toString() {
+    return 'CsvImportWebViewRouteArgs{key: $key, playMode: $playMode, versionId: $versionId}';
+  }
 }
 
 /// generated route for [_i5.PlayLogPage]
@@ -278,6 +288,11 @@ class DailyPlayLogRouteArgs {
   final _i16.Key? key;
 
   final String dateString;
+
+  @override
+  String toString() {
+    return 'DailyPlayLogRouteArgs{key: $key, dateString: $dateString}';
+  }
 }
 
 /// generated route for [_i8.ScorePage]
@@ -295,6 +310,11 @@ class ScoreRouteArgs {
   final _i16.Key? key;
 
   final int chartId;
+
+  @override
+  String toString() {
+    return 'ScoreRouteArgs{key: $key, chartId: $chartId}';
+  }
 }
 
 /// generated route for [_i9.ChartPage]
@@ -312,6 +332,11 @@ class ChartRouteArgs {
   final _i16.Key? key;
 
   final int chartId;
+
+  @override
+  String toString() {
+    return 'ChartRouteArgs{key: $key, chartId: $chartId}';
+  }
 }
 
 /// generated route for [_i10.MemoPage]
@@ -329,6 +354,11 @@ class MemoRouteArgs {
   final _i16.Key? key;
 
   final int chartId;
+
+  @override
+  String toString() {
+    return 'MemoRouteArgs{key: $key, chartId: $chartId}';
+  }
 }
 
 /// generated route for [_i11.InfoPage]
@@ -346,6 +376,11 @@ class InfoRouteArgs {
   final _i16.Key? key;
 
   final int chartId;
+
+  @override
+  String toString() {
+    return 'InfoRouteArgs{key: $key, chartId: $chartId}';
+  }
 }
 
 /// generated route for [_i12.Sp12TierListPage]
@@ -365,6 +400,11 @@ class Sp12TierListRouteArgs {
   final _i16.Key? key;
 
   final String mode;
+
+  @override
+  String toString() {
+    return 'Sp12TierListRouteArgs{key: $key, mode: $mode}';
+  }
 }
 
 /// generated route for [_i13.PlaySummaryPage]
@@ -372,7 +412,8 @@ class PlaySummaryRoute extends _i15.PageRouteInfo<PlaySummaryRouteArgs> {
   PlaySummaryRoute({_i16.Key? key, required String dateString})
       : super(name,
             path: 'summary',
-            args: PlaySummaryRouteArgs(key: key, dateString: dateString));
+            args: PlaySummaryRouteArgs(key: key, dateString: dateString),
+            rawPathParams: {'date': dateString});
 
   static const String name = 'PlaySummaryRoute';
 }
@@ -383,6 +424,11 @@ class PlaySummaryRouteArgs {
   final _i16.Key? key;
 
   final String dateString;
+
+  @override
+  String toString() {
+    return 'PlaySummaryRouteArgs{key: $key, dateString: $dateString}';
+  }
 }
 
 /// generated route for [_i14.PlayDetailPage]
@@ -390,7 +436,8 @@ class PlayDetailRoute extends _i15.PageRouteInfo<PlayDetailRouteArgs> {
   PlayDetailRoute({_i16.Key? key, required String dateString})
       : super(name,
             path: 'chart',
-            args: PlayDetailRouteArgs(key: key, dateString: dateString));
+            args: PlayDetailRouteArgs(key: key, dateString: dateString),
+            rawPathParams: {'date': dateString});
 
   static const String name = 'PlayDetailRoute';
 }
@@ -401,4 +448,9 @@ class PlayDetailRouteArgs {
   final _i16.Key? key;
 
   final String dateString;
+
+  @override
+  String toString() {
+    return 'PlayDetailRouteArgs{key: $key, dateString: $dateString}';
+  }
 }

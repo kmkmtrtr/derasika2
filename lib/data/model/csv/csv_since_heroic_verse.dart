@@ -4,7 +4,7 @@ part 'csv_since_heroic_verse.freezed.dart';
 part 'csv_since_heroic_verse.g.dart';
 
 @freezed
-abstract class CsvSinceHeroicVerse with _$CsvSinceHeroicVerse {
+class CsvSinceHeroicVerse with _$CsvSinceHeroicVerse {
   factory CsvSinceHeroicVerse(
       @JsonKey(name: 'バージョン') String version,
       @JsonKey(name: 'タイトル') String title,

@@ -205,17 +205,19 @@ class _$_PlayLog implements _PlayLog {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _PlayLog &&
-            (identical(other.version, version) || other.version == version) &&
-            (identical(other.versionId, versionId) ||
-                other.versionId == versionId) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.number, number) || other.number == number));
+            const DeepCollectionEquality().equals(other.version, version) &&
+            const DeepCollectionEquality().equals(other.versionId, versionId) &&
+            const DeepCollectionEquality().equals(other.updatedAt, updatedAt) &&
+            const DeepCollectionEquality().equals(other.number, number));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, version, versionId, updatedAt, number);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(version),
+      const DeepCollectionEquality().hash(versionId),
+      const DeepCollectionEquality().hash(updatedAt),
+      const DeepCollectionEquality().hash(number));
 
   @JsonKey(ignore: true)
   @override

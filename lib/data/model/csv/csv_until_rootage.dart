@@ -4,7 +4,7 @@ part 'csv_until_rootage.freezed.dart';
 part 'csv_until_rootage.g.dart';
 
 @freezed
-abstract class CsvUntilRootage with _$CsvUntilRootage {
+class CsvUntilRootage with _$CsvUntilRootage {
   factory CsvUntilRootage(
       @JsonKey(name: 'バージョン') String version,
       @JsonKey(name: 'タイトル') String title,

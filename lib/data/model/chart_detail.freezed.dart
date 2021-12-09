@@ -434,48 +434,47 @@ class _$_ChartDetail implements _ChartDetail {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ChartDetail &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.artist, artist) || other.artist == artist) &&
-            (identical(other.genre, genre) || other.genre == genre) &&
-            (identical(other.minBpm, minBpm) || other.minBpm == minBpm) &&
-            (identical(other.maxBpm, maxBpm) || other.maxBpm == maxBpm) &&
-            (identical(other.notes, notes) || other.notes == notes) &&
-            (identical(other.max, max) || other.max == max) &&
-            (identical(other.maxMinus, maxMinus) ||
-                other.maxMinus == maxMinus) &&
-            (identical(other.rankAAA, rankAAA) || other.rankAAA == rankAAA) &&
-            (identical(other.rankAAAMinus, rankAAAMinus) ||
-                other.rankAAAMinus == rankAAAMinus) &&
-            (identical(other.rankAA, rankAA) || other.rankAA == rankAA) &&
-            (identical(other.rankAAMinus, rankAAMinus) ||
-                other.rankAAMinus == rankAAMinus) &&
-            (identical(other.rankA, rankA) || other.rankA == rankA) &&
-            (identical(other.difficulty, difficulty) ||
-                other.difficulty == difficulty) &&
-            (identical(other.level, level) || other.level == level) &&
-            (identical(other.textageUrl, textageUrl) ||
-                other.textageUrl == textageUrl));
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.artist, artist) &&
+            const DeepCollectionEquality().equals(other.genre, genre) &&
+            const DeepCollectionEquality().equals(other.minBpm, minBpm) &&
+            const DeepCollectionEquality().equals(other.maxBpm, maxBpm) &&
+            const DeepCollectionEquality().equals(other.notes, notes) &&
+            const DeepCollectionEquality().equals(other.max, max) &&
+            const DeepCollectionEquality().equals(other.maxMinus, maxMinus) &&
+            const DeepCollectionEquality().equals(other.rankAAA, rankAAA) &&
+            const DeepCollectionEquality()
+                .equals(other.rankAAAMinus, rankAAAMinus) &&
+            const DeepCollectionEquality().equals(other.rankAA, rankAA) &&
+            const DeepCollectionEquality()
+                .equals(other.rankAAMinus, rankAAMinus) &&
+            const DeepCollectionEquality().equals(other.rankA, rankA) &&
+            const DeepCollectionEquality()
+                .equals(other.difficulty, difficulty) &&
+            const DeepCollectionEquality().equals(other.level, level) &&
+            const DeepCollectionEquality()
+                .equals(other.textageUrl, textageUrl));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      title,
-      artist,
-      genre,
-      minBpm,
-      maxBpm,
-      notes,
-      max,
-      maxMinus,
-      rankAAA,
-      rankAAAMinus,
-      rankAA,
-      rankAAMinus,
-      rankA,
-      difficulty,
-      level,
-      textageUrl);
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(artist),
+      const DeepCollectionEquality().hash(genre),
+      const DeepCollectionEquality().hash(minBpm),
+      const DeepCollectionEquality().hash(maxBpm),
+      const DeepCollectionEquality().hash(notes),
+      const DeepCollectionEquality().hash(max),
+      const DeepCollectionEquality().hash(maxMinus),
+      const DeepCollectionEquality().hash(rankAAA),
+      const DeepCollectionEquality().hash(rankAAAMinus),
+      const DeepCollectionEquality().hash(rankAA),
+      const DeepCollectionEquality().hash(rankAAMinus),
+      const DeepCollectionEquality().hash(rankA),
+      const DeepCollectionEquality().hash(difficulty),
+      const DeepCollectionEquality().hash(level),
+      const DeepCollectionEquality().hash(textageUrl));
 
   @JsonKey(ignore: true)
   @override

@@ -344,47 +344,41 @@ class _$_ScoreLog implements _ScoreLog {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ScoreLog &&
-            (identical(other.score, score) || other.score == score) &&
-            (identical(other.clearTypeId, clearTypeId) ||
-                other.clearTypeId == clearTypeId) &&
-            (identical(other.clearType, clearType) ||
-                other.clearType == clearType) &&
-            (identical(other.djLevelTypeId, djLevelTypeId) ||
-                other.djLevelTypeId == djLevelTypeId) &&
-            (identical(other.djLevelType, djLevelType) ||
-                other.djLevelType == djLevelType) &&
-            (identical(other.scorePace, scorePace) ||
-                other.scorePace == scorePace) &&
-            (identical(other.nextScorePace, nextScorePace) ||
-                other.nextScorePace == nextScorePace) &&
-            (identical(other.scoreRate, scoreRate) ||
-                other.scoreRate == scoreRate) &&
-            (identical(other.djPoint, djPoint) || other.djPoint == djPoint) &&
-            (identical(other.misscount, misscount) ||
-                other.misscount == misscount) &&
-            (identical(other.versionId, versionId) ||
-                other.versionId == versionId) &&
-            (identical(other.version, version) || other.version == version) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+            const DeepCollectionEquality().equals(other.score, score) &&
+            const DeepCollectionEquality()
+                .equals(other.clearTypeId, clearTypeId) &&
+            const DeepCollectionEquality().equals(other.clearType, clearType) &&
+            const DeepCollectionEquality()
+                .equals(other.djLevelTypeId, djLevelTypeId) &&
+            const DeepCollectionEquality()
+                .equals(other.djLevelType, djLevelType) &&
+            const DeepCollectionEquality().equals(other.scorePace, scorePace) &&
+            const DeepCollectionEquality()
+                .equals(other.nextScorePace, nextScorePace) &&
+            const DeepCollectionEquality().equals(other.scoreRate, scoreRate) &&
+            const DeepCollectionEquality().equals(other.djPoint, djPoint) &&
+            const DeepCollectionEquality().equals(other.misscount, misscount) &&
+            const DeepCollectionEquality().equals(other.versionId, versionId) &&
+            const DeepCollectionEquality().equals(other.version, version) &&
+            const DeepCollectionEquality().equals(other.updatedAt, updatedAt));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      score,
-      clearTypeId,
-      clearType,
-      djLevelTypeId,
-      djLevelType,
-      scorePace,
-      nextScorePace,
-      scoreRate,
-      djPoint,
-      misscount,
-      versionId,
-      version,
-      updatedAt);
+      const DeepCollectionEquality().hash(score),
+      const DeepCollectionEquality().hash(clearTypeId),
+      const DeepCollectionEquality().hash(clearType),
+      const DeepCollectionEquality().hash(djLevelTypeId),
+      const DeepCollectionEquality().hash(djLevelType),
+      const DeepCollectionEquality().hash(scorePace),
+      const DeepCollectionEquality().hash(nextScorePace),
+      const DeepCollectionEquality().hash(scoreRate),
+      const DeepCollectionEquality().hash(djPoint),
+      const DeepCollectionEquality().hash(misscount),
+      const DeepCollectionEquality().hash(versionId),
+      const DeepCollectionEquality().hash(version),
+      const DeepCollectionEquality().hash(updatedAt));
 
   @JsonKey(ignore: true)
   @override
