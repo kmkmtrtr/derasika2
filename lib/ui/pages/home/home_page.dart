@@ -113,7 +113,11 @@ class HomePage extends HookConsumerWidget {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(const SnackBar(content: Text('並び替えを実行しました')));
               }),
-          IconButton(icon: const Icon(Icons.filter_alt), onPressed: () {}),
+          IconButton(
+              icon: const Icon(Icons.filter_alt),
+              onPressed: () async {
+                final result = await context.pushRoute(const FilterRoute());
+              }),
         ],
       ),
       body: Listener(
