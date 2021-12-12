@@ -10,7 +10,7 @@ class SortPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(sortViewModelProvider);
-    final conditionDropdownItems = [
+    final elements = [
       SortElement.title,
       SortElement.level,
       SortElement.difficulty,
@@ -21,7 +21,12 @@ class SortPage extends HookConsumerWidget {
       SortElement.version,
       SortElement.prevScoreDiff,
       SortElement.bestScoreDiff,
-    ]
+    ];
+    final orders = [
+      SortOrder.asc,
+      SortOrder.desc,
+    ];
+    final conditionDropdownItems = elements
         .asMap()
         .entries
         .map(
@@ -31,7 +36,7 @@ class SortPage extends HookConsumerWidget {
           ),
         )
         .toList();
-    final orderDropdownItems = [SortOrder.asc, SortOrder.desc]
+    final orderDropdownItems = orders
         .asMap()
         .entries
         .map(
@@ -55,27 +60,27 @@ class SortPage extends HookConsumerWidget {
                   const Text('並び替え条件：'),
                   DropdownButton(
                     items: conditionDropdownItems,
-                    value: x.value.sortElement.index,
+                    value: elements.indexOf(x.value.sortElement),
                     onChanged: (int? index) {
                       if (index == null) {
                         return;
                       }
                       ref
                           .read(sortViewModelProvider)
-                          .changeElement(x.key, SortElement.values[index]);
+                          .changeElement(x.key, elements[index]);
                     },
                   ),
                   const Text('並び順：'),
                   DropdownButton(
                     items: orderDropdownItems,
-                    value: x.value.sortOrder.index,
+                    value: orders.indexOf(x.value.sortOrder),
                     onChanged: (int? index) {
                       if (index == null) {
                         return;
                       }
                       ref
                           .read(sortViewModelProvider)
-                          .changeOrder(x.key, SortOrder.values[index]);
+                          .changeOrder(x.key, orders[index]);
                     },
                   ),
                 ],
