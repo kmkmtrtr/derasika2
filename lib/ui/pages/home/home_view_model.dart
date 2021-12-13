@@ -68,7 +68,7 @@ class HomeViewModel extends ChangeNotifier {
     int defaultSortFunction(ScoreData a, ScoreData b) {
       return a.title != b.title
           ? a.title.compareTo(b.title)
-          : a.difficulty.compareTo(b.difficulty);
+          : a.difficultyId.compareTo(b.difficultyId);
     }
 
     return _sortCondition
