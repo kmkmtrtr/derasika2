@@ -14,6 +14,7 @@ import 'package:derasika2/ui/pages/score_detail/children/score_page.dart';
 import 'package:derasika2/ui/pages/score_detail/score_detail_page.dart';
 import 'package:derasika2/ui/pages/sp12_tier/sp12_tier_list_page.dart';
 import 'package:derasika2/ui/pages/sp12_tier/sp12_tier_page.dart';
+import 'package:derasika2/ui/pages/statistic/statistic_page.dart';
 import 'package:derasika2/ui/pages/webview/csv_import_webview.dart';
 
 @AdaptiveAutoRouter(
@@ -47,6 +48,10 @@ import 'package:derasika2/ui/pages/webview/csv_import_webview.dart';
     AutoRoute(
       path: '/playLogs',
       page: PlayLogPage,
+    ),
+    AutoRoute(
+      path: '/statistic',
+      page: StatisticPage,
     ),
     AutoRoute(
       path: '/sp12Tier',
