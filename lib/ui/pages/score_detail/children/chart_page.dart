@@ -12,6 +12,7 @@ class ChartPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scoreViewModel = ref.watch(scoreViewModelProvider(chartId));
+    final theme = Theme.of(context);
     final barGroups = scoreViewModel.scores.reversed
         .groupListsBy((e) => e.versionId)
         .entries
@@ -23,6 +24,7 @@ class ChartPage extends HookConsumerWidget {
                 y: e.value.last.score.toDouble(),
                 width: 25,
                 borderRadius: const BorderRadius.all(Radius.zero),
+                // TODO 現在のバージョンを取得する
                 colors: e.value.last.versionId == 29
                     ? [Colors.blue]
                     : [Colors.green],
@@ -37,9 +39,9 @@ class ChartPage extends HookConsumerWidget {
             MapEntry(key, value.first.version.replaceAll(' ', '\r\n')));
     final scoreBorder = {
       scoreViewModel.chartDetail?.rankA: 'A',
-      scoreViewModel.chartDetail?.rankAAMinus: 'AA-',
+      scoreViewModel.chartDetail?.rankAAMinus: 'A+',
       scoreViewModel.chartDetail?.rankAA: 'AA',
-      scoreViewModel.chartDetail?.rankAAAMinus: 'AAA-',
+      scoreViewModel.chartDetail?.rankAAAMinus: 'AA+',
       scoreViewModel.chartDetail?.rankAAA: 'AAA',
       scoreViewModel.chartDetail?.maxMinus: 'Max-',
       scoreViewModel.chartDetail?.max: 'Max',
@@ -65,16 +67,24 @@ class ChartPage extends HookConsumerWidget {
             bottomTitles: SideTitles(
                 showTitles: true,
                 margin: 10,
-                rotateAngle: 45,
+                getTextStyles: (context, value) => theme.textTheme.caption,
                 getTitles: (v) {
                   return versionDictionary[v.toInt()] ?? '';
                 }),
           ),
           barGroups: barGroups,
+          barTouchData: BarTouchData(
+            touchTooltipData: BarTouchTooltipData(
+              getTooltipItem: (group, groupIndex, rod, rodIndex) => BarTooltipItem(
+                  '${versionDictionary[group.x]?.replaceAll('\r\n', ' ')}\r\n${rod.y.toInt().toString()}',
+                  (theme.textTheme.bodyText2?.copyWith(color: Colors.white))!),
+            ),
+          ),
           maxY: scoreViewModel.chartDetail?.max.toDouble(),
           minY: scoreViewModel.chartDetail?.rankA.toDouble(),
           gridData: FlGridData(
               show: true,
+              drawVerticalLine: false,
               horizontalInterval: 1,
               checkToShowHorizontalLine: (v) {
                 return scoreBorder.containsKey(v.toInt());
