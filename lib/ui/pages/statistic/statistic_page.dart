@@ -1,7 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:derasika2/ui/pages/statistic/statistic_view_model.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class StatisticPage extends HookConsumerWidget {
@@ -9,11 +10,30 @@ class StatisticPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
     final statisticViewModel = ref.watch(statisticViewModelProvider);
     final version = useState(0);
     final level = useState(0);
 
     final snapshot = useFuture(useMemoized(statisticViewModel.loadData));
+    final filteredScores = statisticViewModel.scores.where(
+      (e) =>
+          (e.versionId == version.value || version.value == 0) &&
+          (e.level == level.value || level.value == 0),
+    );
+
+    final scoreGroup = filteredScores.groupListsBy((e) => e.djLevelId);
+    final sections = scoreGroup.entries
+        .sorted((a, b) => b.key.compareTo(a.key))
+        .map(
+          (e) => PieChartSectionData(
+              value: e.value.length.toDouble(),
+              title: e.value.first.djLevel,
+              radius: 100,
+              color: getGraphColor(e.key)),
+        )
+        .toList();
+
     final versionDropdowns = [
       const DropdownMenuItem(
         child: Text('---'),
@@ -83,59 +103,96 @@ class StatisticPage extends HookConsumerWidget {
                     pieTouchData: PieTouchData(),
                     borderData: FlBorderData(show: false),
                     sectionsSpace: 1,
-                    centerSpaceRadius: 0,
+                    centerSpaceRadius: 60,
                     startDegreeOffset: 270,
-                    sections: [
-                      PieChartSectionData(
-                        value: 4,
-                        title: 'MAX-',
-                        radius: 150,
-                        titlePositionPercentageOffset: 1.15,
-                        color: Colors.yellow.shade400,
-                      ),
-                      PieChartSectionData(
-                        value: 196,
-                        title: 'AAA',
-                        radius: 140,
-                        titlePositionPercentageOffset: 1.15,
-                        color: Colors.yellow.shade600,
-                      ),
-                      PieChartSectionData(
-                        value: 104,
-                        title: 'AA+',
-                        radius: 130,
-                        titlePositionPercentageOffset: 1.15,
-                        color: Colors.grey.shade300,
-                      ),
-                      PieChartSectionData(
-                        value: 94,
-                        title: 'AA',
-                        radius: 120,
-                        titlePositionPercentageOffset: 1.15,
-                        color: Colors.grey.shade400,
-                      ),
-                      PieChartSectionData(
-                        value: 4,
-                        title: 'A+',
-                        radius: 110,
-                        titlePositionPercentageOffset: 1.15,
-                        color: Colors.green.shade300,
-                      ),
-                      PieChartSectionData(
-                        value: 4,
-                        title: 'A',
-                        radius: 100,
-                        titlePositionPercentageOffset: 1.15,
-                        color: Colors.green.shade400,
-                      ),
-                    ],
+                    sections: sections,
                   ),
                 ),
+              ),
+            ),
+            Card(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text('AAA', style: theme.textTheme.headline4),
+                      Text(scoreGroup[9]?.length.toString() ?? '0',
+                          style: theme.textTheme.headline4),
+                      Text(
+                          '${((((scoreGroup[9]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
+                          style: theme.textTheme.headline4),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ),
+                  Row(
+                    children: [
+                      Text('AA', style: theme.textTheme.headline4),
+                      Text(scoreGroup[8]?.length.toString() ?? '0',
+                          style: theme.textTheme.headline4),
+                      Text(
+                          '${((((scoreGroup[8]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
+                          style: theme.textTheme.headline4),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ),
+                  Row(
+                    children: [
+                      Text('A', style: theme.textTheme.headline4),
+                      Text(scoreGroup[7]?.length.toString() ?? '0',
+                          style: theme.textTheme.headline4),
+                      Text(
+                          '${((((scoreGroup[7]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
+                          style: theme.textTheme.headline4),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ),
+                  Row(
+                    children: [
+                      Text('B~F', style: theme.textTheme.headline4),
+                      Text(scoreGroup[6]?.length.toString() ?? '0',
+                          style: theme.textTheme.headline4),
+                      Text(
+                          '${((((scoreGroup[6]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
+                          style: theme.textTheme.headline4),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ),
+                  Row(
+                    children: [
+                      Text('---', style: theme.textTheme.headline4),
+                      Text(scoreGroup[1]?.length.toString() ?? '0',
+                          style: theme.textTheme.headline4),
+                      Text(
+                          '${((((scoreGroup[1]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
+                          style: theme.textTheme.headline4),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Color getGraphColor(int djlevelId) {
+    switch (djlevelId) {
+      case 9:
+        return Colors.yellow.shade400;
+      case 8:
+        return Colors.grey.shade300;
+      case 7:
+        return Colors.green.shade300;
+      case 6:
+      case 5:
+      case 4:
+      case 3:
+      case 2:
+        return Colors.blue.shade400;
+      default:
+        return Colors.grey.shade100;
+    }
   }
 }
