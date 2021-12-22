@@ -15,7 +15,7 @@ class StatisticPage extends HookConsumerWidget {
     final version = useState(0);
     final level = useState(0);
 
-    final snapshot = useFuture(useMemoized(statisticViewModel.loadData));
+    final _ = useFuture(useMemoized(statisticViewModel.loadData));
     final filteredScores = statisticViewModel.scores.where(
       (e) =>
           (e.versionId == version.value || version.value == 0) &&
@@ -60,6 +60,40 @@ class StatisticPage extends HookConsumerWidget {
       )
     ];
 
+    final djLevels = {
+      1: '---',
+      2: 'F',
+      3: 'E',
+      4: 'D',
+      5: 'C',
+      6: 'B',
+      7: 'A',
+      8: 'AA',
+      9: 'AAA',
+    };
+    final table = djLevels.entries
+        .map(
+          (x) => Row(
+            children: [
+              Expanded(
+                  child: Center(
+                      child: Text(x.value, style: theme.textTheme.headline5))),
+              Expanded(
+                  child: Center(
+                      child: Text(scoreGroup[x.key]?.length.toString() ?? '0',
+                          style: theme.textTheme.headline5))),
+              Expanded(
+                  child: Center(
+                      child: Text(
+                          '${filteredScores.isNotEmpty ? ((((scoreGroup[x.key]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2)) : '---'}%',
+                          style: theme.textTheme.headline5)))
+            ],
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ),
+        )
+        .toList()
+        .reversed;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('統計'),
@@ -98,76 +132,25 @@ class StatisticPage extends HookConsumerWidget {
             Card(
               child: AspectRatio(
                 aspectRatio: 1.21,
-                child: PieChart(
-                  PieChartData(
-                    pieTouchData: PieTouchData(),
-                    borderData: FlBorderData(show: false),
-                    sectionsSpace: 1,
-                    centerSpaceRadius: 60,
-                    startDegreeOffset: 270,
-                    sections: sections,
-                  ),
-                ),
+                child: sections.isNotEmpty
+                    ? PieChart(
+                        PieChartData(
+                          pieTouchData: PieTouchData(),
+                          borderData: FlBorderData(show: false),
+                          sectionsSpace: 1,
+                          centerSpaceRadius: 60,
+                          startDegreeOffset: 270,
+                          sections: sections,
+                        ),
+                      )
+                    : null,
               ),
             ),
             Card(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text('AAA', style: theme.textTheme.headline4),
-                      Text(scoreGroup[9]?.length.toString() ?? '0',
-                          style: theme.textTheme.headline4),
-                      Text(
-                          '${((((scoreGroup[9]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
-                          style: theme.textTheme.headline4),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  ),
-                  Row(
-                    children: [
-                      Text('AA', style: theme.textTheme.headline4),
-                      Text(scoreGroup[8]?.length.toString() ?? '0',
-                          style: theme.textTheme.headline4),
-                      Text(
-                          '${((((scoreGroup[8]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
-                          style: theme.textTheme.headline4),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  ),
-                  Row(
-                    children: [
-                      Text('A', style: theme.textTheme.headline4),
-                      Text(scoreGroup[7]?.length.toString() ?? '0',
-                          style: theme.textTheme.headline4),
-                      Text(
-                          '${((((scoreGroup[7]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
-                          style: theme.textTheme.headline4),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  ),
-                  Row(
-                    children: [
-                      Text('B~F', style: theme.textTheme.headline4),
-                      Text(scoreGroup[6]?.length.toString() ?? '0',
-                          style: theme.textTheme.headline4),
-                      Text(
-                          '${((((scoreGroup[6]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
-                          style: theme.textTheme.headline4),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  ),
-                  Row(
-                    children: [
-                      Text('---', style: theme.textTheme.headline4),
-                      Text(scoreGroup[1]?.length.toString() ?? '0',
-                          style: theme.textTheme.headline4),
-                      Text(
-                          '${((((scoreGroup[1]?.length ?? 0) / filteredScores.length) * 100).toStringAsFixed(2))}%',
-                          style: theme.textTheme.headline4),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  ),
+                  Text('DJ LEVEL', style: theme.textTheme.headline4),
+                  ...table
                 ],
               ),
             ),
