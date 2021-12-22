@@ -31,6 +31,19 @@ class ScoreDataSource {
     return data.map((e) => ScoreData.fromJson(e)).toList();
   }
 
+  Future<List<ScoreData>> fetchVersionAllScores(
+      int version, PlayMode playMode) async {
+    final List<Object?> args = [version, playMode.index + 1];
+    const whereCondition = 'score_version_id=? and mode_type_id=?';
+    final db = await _appDb.connection;
+    final data = await db.query(
+      'version_all_score_view',
+      where: whereCondition,
+      whereArgs: args,
+    );
+    return data.map((e) => ScoreData.fromJson(e)).toList();
+  }
+
   Future<List<ScoreLog>> fetchChartScores(int chartId) async {
     final db = await _appDb.connection;
     final data = await db.query(
