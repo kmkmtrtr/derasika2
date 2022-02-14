@@ -18,6 +18,7 @@ class App extends HookConsumerWidget {
       supportedLocales: const [Locale('ja', 'JP')],
       routerDelegate: appRouter.delegate(),
       routeInformationParser: appRouter.defaultRouteParser(),
+      restorationScopeId: 'derasika2',
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
