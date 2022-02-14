@@ -13,7 +13,7 @@ class App extends HookConsumerWidget {
     return MaterialApp.router(
       title: 'DERASIKA',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.brown,
       ),
       supportedLocales: const [Locale('ja', 'JP')],
       routerDelegate: appRouter.delegate(),
