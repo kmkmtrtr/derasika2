@@ -32,6 +32,11 @@ class ScoreRepository {
         version, where, whereArgs, orderBy, playMode);
   }
 
+  Future<List<ScoreData>> getCurrentVersionAllScores(PlayMode playMode) async {
+    final version = await getCurrentVersionId();
+    return await _scoreDataSource.fetchVersionAllScores(version, playMode);
+  }
+
   Future<int> getCurrentVersionId() {
     return _scoreDataSource.fetchCurrentVersionId();
   }

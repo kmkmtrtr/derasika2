@@ -4,7 +4,6 @@ import 'package:derasika2/data/model/enum/play_mode.dart';
 import 'package:derasika2/ui/pages/home/home_view_model.dart';
 import 'package:derasika2/ui/route/app_route.gr.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
@@ -31,6 +30,14 @@ class HomeDrawer extends HookConsumerWidget {
                   onTap: () {
                     context.popRoute();
                     context.pushRoute(const PlayLogRoute());
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.analytics),
+                  title: const Text('統計'),
+                  onTap: () {
+                    context.popRoute();
+                    context.pushRoute(const StatisticRoute());
                   },
                 ),
                 ListTile(
