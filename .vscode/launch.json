@@ -7,7 +7,12 @@
         {
             "name": "derasika2",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--debug",
+                "--flavor",
+                "dev",
+            ]
         },
         {
             "name": "derasika2 (profile mode)",

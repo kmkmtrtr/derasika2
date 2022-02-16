@@ -66,18 +66,23 @@ android {
     }
 
     buildTypes {
-        debug {
-            debuggable true
-            applicationIdSuffix ".dev"
-            resValue "string", "app_name", "derasika2.dev"
-        }
         release {
-            debuggable false
-            applicationIdSuffix ""
-            resValue "string", "app_name", "derasika2"
             signingConfig signingConfigs.release
         }
     }
+
+    flavorDimensions "default"
+
+    productFlavors {
+        dev {
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "dev_derasika2"
+        }
+        prod {
+            applicationIdSuffix ""
+            resValue "string", "app_name", "derasika2"
+        }
+   }
 }
 
 flutter {

@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:derasika2/ui/pages/daily_play_log/daily_play_log_page.dart';
 import 'package:derasika2/ui/pages/daily_play_log/play_detail_page.dart';
 import 'package:derasika2/ui/pages/daily_play_log/play_summary_page.dart';
+import 'package:derasika2/ui/pages/home/filter/filter_page.dart';
 import 'package:derasika2/ui/pages/home/home_page.dart';
 import 'package:derasika2/ui/pages/home/sort/sort_page.dart';
 import 'package:derasika2/ui/pages/play_log/play_log_page.dart';
@@ -23,6 +24,11 @@ import 'package:derasika2/ui/pages/webview/csv_import_webview.dart';
     AutoRoute(
       path: '/',
       page: HomePage,
+    ),
+    AutoRoute(
+      path: '/filter',
+      page: FilterPage,
+      fullscreenDialog: true,
     ),
     AutoRoute(
       path: '/sort',
