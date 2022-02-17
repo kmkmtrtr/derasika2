@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:derasika2/ui/component/loading_container.dart';
 import 'package:derasika2/ui/pages/score_detail/score_view_model.dart';
 import 'package:derasika2/ui/route/app_route.dart';
